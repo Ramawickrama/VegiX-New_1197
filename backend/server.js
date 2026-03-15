@@ -22,6 +22,8 @@ const ALLOWED_ORIGINS = [
   'http://127.0.0.1:3000',
   'http://127.0.0.1:3001',
   'http://127.0.0.1:5173',
+  'http://16.171.52.155',
+  'https://16.171.52.155',
 ];
 
 const corsOptions = {
@@ -127,10 +129,14 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 const startServer = (port) => {
-  server.listen(port, () => {
+  server.listen(port, '0.0.0.0', () => {
+    const serverUrl = process.env.NODE_ENV === 'production' 
+      ? `http://0.0.0.0:${port}` 
+      : `http://localhost:${port}`;
     console.log(`\n╔════════════════════════════════════╗`);
     console.log(`║   VegiX Backend Server Running     ║`);
-    console.log(`║   URL: http://localhost:${port}     ║`);
+    console.log(`║   URL: http://0.0.0.0:${port}          ║`);
+    console.log(`║   External: http://<YOUR-IP>:${port}  ║`);
     console.log(`║   WebSocket: Enabled               ║`);
     console.log(`╚════════════════════════════════════╝\n`);
   });
