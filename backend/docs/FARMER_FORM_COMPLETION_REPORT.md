@@ -70,7 +70,7 @@
 **Verification Results:**
 - ✅ `vegetableController.js` uses `exports.getAllVegetables` pattern
 - ✅ Returns `{ success: true, count: X, data: [...] }` format
-- ✅ Backend running on `http://localhost:5000` (verified)
+- ✅ Backend running on `http://16.171.52.155:5000` (verified)
 - ✅ API endpoints responding correctly
 - ✅ No connection refused errors
 - ✅ Proper error handling in frontend for missed connections

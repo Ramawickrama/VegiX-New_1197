@@ -53,9 +53,9 @@ NODE_ENV=development
 
 ```
 Frontend:   http://localhost:3000
-Backend:    http://localhost:5000
-API Base:   http://localhost:5000/api
-Health:     http://localhost:5000/api/ping
+Backend:    http://16.171.52.155:5000
+API Base:   http://16.171.52.155:5000/api
+Health:     http://16.171.52.155:5000/api/ping
 ```
 
 ---
@@ -318,7 +318,7 @@ Run these to verify everything works:
 
 ```bash
 # 1. Backend health
-curl http://localhost:5000/api/ping
+curl http://16.171.52.155:5000/api/ping
 
 # 2. Login
 POST /api/auth/login

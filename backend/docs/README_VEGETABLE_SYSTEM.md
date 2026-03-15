@@ -165,7 +165,7 @@ npm start
 
 ### 2. Test the API
 ```bash
-curl http://localhost:5000/api/vegetables \
+curl http://16.171.52.155:5000/api/vegetables \
   -H "Authorization: Bearer {token}"
 ```
 

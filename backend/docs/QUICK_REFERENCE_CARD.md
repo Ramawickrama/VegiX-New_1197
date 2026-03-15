@@ -20,7 +20,7 @@ System that allows admins to set dynamic market prices for vegetables, which aut
 
 ### 1. Update Market Price (Admin)
 ```bash
-curl -X PUT http://localhost:5000/api/admin/market-price \
+curl -X PUT http://16.171.52.155:5000/api/admin/market-price \
   -H "Authorization: Bearer ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"vegetableId": "VEGE_ID", "pricePerKg": 150}'
@@ -28,7 +28,7 @@ curl -X PUT http://localhost:5000/api/admin/market-price \
 
 ### 2. Farmer Publishes Order
 ```bash
-curl -X POST http://localhost:5000/api/farmer/publish-order \
+curl -X POST http://16.171.52.155:5000/api/farmer/publish-order \
   -H "Authorization: Bearer FARMER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"vegetableId": "VEGE_ID", "quantity": 50, "pricePerUnit": 150}'
@@ -37,7 +37,7 @@ curl -X POST http://localhost:5000/api/farmer/publish-order \
 
 ### 3. Broker Publishes Selling Order
 ```bash
-curl -X POST http://localhost:5000/api/broker/publish-sell-order \
+curl -X POST http://16.171.52.155:5000/api/broker/publish-sell-order \
   -H "Authorization: Bearer BROKER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"vegetableId": "VEGE_ID", "quantity": 50}'
@@ -46,14 +46,14 @@ curl -X POST http://localhost:5000/api/broker/publish-sell-order \
 
 ### 4. Check Market Prices
 ```bash
-curl -X GET http://localhost:5000/api/admin/market-prices \
+curl -X GET http://16.171.52.155:5000/api/admin/market-prices \
   -H "Authorization: Bearer TOKEN"
 ```
 **Result:** Array with all prices, updated timestamps
 
 ### 5. Get Price History
 ```bash
-curl -X GET http://localhost:5000/api/admin/price-history/VEGE_ID \
+curl -X GET http://16.171.52.155:5000/api/admin/price-history/VEGE_ID \
   -H "Authorization: Bearer TOKEN"
 ```
 **Result:** Historical data array with timestamps (up to 30)

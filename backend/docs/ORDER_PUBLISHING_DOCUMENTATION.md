@@ -250,7 +250,7 @@ Available vegetables (use these IDs for publishing orders):
 
 **Register a test user:**
 ```bash
-POST http://localhost:5000/api/auth/register
+POST http://16.171.52.155:5000/api/auth/register
 
 {
   "name": "John Farmer",
@@ -265,7 +265,7 @@ POST http://localhost:5000/api/auth/register
 
 **Login to get token:**
 ```bash
-POST http://localhost:5000/api/auth/login
+POST http://16.171.52.155:5000/api/auth/login
 
 {
   "email": "farmer@test.com",
@@ -279,7 +279,7 @@ Response: { token: "eyJhbGc...", user: {...} }
 
 **Request:**
 ```bash
-POST http://localhost:5000/api/farmer/publish-order
+POST http://16.171.52.155:5000/api/farmer/publish-order
 Authorization: Bearer <YOUR_TOKEN>
 Content-Type: application/json
 
@@ -332,7 +332,7 @@ Content-Type: application/json
 
 **Request:**
 ```bash
-POST http://localhost:5000/api/broker/publish-buy-order
+POST http://16.171.52.155:5000/api/broker/publish-buy-order
 Authorization: Bearer <BROKER_TOKEN>
 Content-Type: application/json
 
@@ -365,7 +365,7 @@ Content-Type: application/json
 
 **Request:**
 ```bash
-POST http://localhost:5000/api/broker/publish-sell-order
+POST http://16.171.52.155:5000/api/broker/publish-sell-order
 Authorization: Bearer <BROKER_TOKEN>
 Content-Type: application/json
 
@@ -400,7 +400,7 @@ Content-Type: application/json
 
 **Request:**
 ```bash
-POST http://localhost:5000/api/buyer/publish-order
+POST http://16.171.52.155:5000/api/buyer/publish-order
 Authorization: Bearer <BUYER_TOKEN>
 Content-Type: application/json
 
@@ -544,5 +544,5 @@ The order publishing functionality is **fully implemented and working correctly*
 ---
 
 Generated: February 23, 2026  
-Backend: Running on http://localhost:5000  
+Backend: Running on http://16.171.52.155:5000  
 MongoDB: Connected to Atlas  

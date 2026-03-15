@@ -267,7 +267,7 @@ Fix:
 ```
 Fix:
 1. Check vegetables in database
-2. Verify API response: curl http://localhost:5000/api/vegetables
+2. Verify API response: curl http://16.171.52.155:5000/api/vegetables
 3. Check authentication token
 4. Look for CORS errors in console
 ```

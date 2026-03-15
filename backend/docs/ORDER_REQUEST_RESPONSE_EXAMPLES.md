@@ -11,7 +11,7 @@ All examples use actual structure and data types. Copy these directly to test!
 ### Request
 
 ```
-POST http://localhost:5000/api/farmer/publish-order
+POST http://16.171.52.155:5000/api/farmer/publish-order
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 Content-Type: application/json
 
@@ -70,7 +70,7 @@ Content-Type: application/json
 ### Request
 
 ```
-POST http://localhost:5000/api/broker/publish-buy-order
+POST http://16.171.52.155:5000/api/broker/publish-buy-order
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 Content-Type: application/json
 
@@ -129,7 +129,7 @@ Content-Type: application/json
 ### Request
 
 ```
-POST http://localhost:5000/api/broker/publish-sell-order
+POST http://16.171.52.155:5000/api/broker/publish-sell-order
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 Content-Type: application/json
 
@@ -188,7 +188,7 @@ Content-Type: application/json
 ### Request
 
 ```
-POST http://localhost:5000/api/buyer/publish-order
+POST http://16.171.52.155:5000/api/buyer/publish-order
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 Content-Type: application/json
 

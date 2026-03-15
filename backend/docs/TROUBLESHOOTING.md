@@ -139,14 +139,14 @@ app.use(cors({
 
 // For production, update frontend API base URL
 // In axios requests, use:
-// http://localhost:5000 for development
+// http://16.171.52.155:5000 for development
 // https://yourdomain.com for production
 
 // Check frontend proxy in vite.config.js:
 server: {
   proxy: {
     '/api': {
-      target: 'http://localhost:5000',
+      target: 'http://16.171.52.155:5000',
       changeOrigin: true,
     }
   }
@@ -336,7 +336,7 @@ return (
 import axios from 'axios';
 
 // 2. Verify API endpoint URL
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://16.171.52.155:5000/api';
 // OR use environment variable
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -469,7 +469,7 @@ Before reporting an issue, verify:
 - [ ] Network access allowed in MongoDB (IP whitelisted)
 - [ ] `npm run dev` runs backend without immediate errors
 - [ ] `npm run dev` runs frontend without immediate errors
-- [ ] Can access http://localhost:5000/api/ping
+- [ ] Can access http://16.171.52.155:5000/api/ping
 - [ ] Can access http://localhost:3000
 - [ ] Backend and frontend both running in separate terminals
 - [ ] Using correct credentials (admin@vegix.com / password123)

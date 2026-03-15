@@ -24,7 +24,7 @@
               "raw": "{\n  \"name\": \"John Farmer\",\n  \"email\": \"farmer@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"farmer\",\n  \"phone\": \"0771234567\",\n  \"location\": \"Colombo\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/api/auth/register",
+              "raw": "http://16.171.52.155:5000/api/auth/register",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -47,7 +47,7 @@
               "raw": "{\n  \"email\": \"farmer@example.com\",\n  \"password\": \"password123\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/api/auth/login",
+              "raw": "http://16.171.52.155:5000/api/auth/login",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -70,7 +70,7 @@
               "raw": "{\n  \"name\": \"Jane Broker\",\n  \"email\": \"broker@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"broker\",\n  \"phone\": \"0772345678\",\n  \"location\": \"Colombo\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/api/auth/register",
+              "raw": "http://16.171.52.155:5000/api/auth/register",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -93,7 +93,7 @@
               "raw": "{\n  \"email\": \"broker@example.com\",\n  \"password\": \"password123\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/api/auth/login",
+              "raw": "http://16.171.52.155:5000/api/auth/login",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -116,7 +116,7 @@
               "raw": "{\n  \"name\": \"Bob Buyer\",\n  \"email\": \"buyer@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"buyer\",\n  \"phone\": \"0773456789\",\n  \"location\": \"Kandy\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/api/auth/register",
+              "raw": "http://16.171.52.155:5000/api/auth/register",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -139,7 +139,7 @@
               "raw": "{\n  \"email\": \"buyer@example.com\",\n  \"password\": \"password123\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/api/auth/login",
+              "raw": "http://16.171.52.155:5000/api/auth/login",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -158,7 +158,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/api/vegetables",
+              "raw": "http://16.171.52.155:5000/api/vegetables",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -190,7 +190,7 @@
               "raw": "{\n  \"vegetableId\": \"{{VEGETABLE_ID}}\",\n  \"quantity\": 100,\n  \"unit\": \"kg\",\n  \"pricePerUnit\": 150,\n  \"location\": \"Colombo\",\n  \"quality\": \"premium\",\n  \"description\": \"Fresh organic tomatoes from my farm\",\n  \"deliveryDate\": \"2026-02-28\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/api/farmer/publish-order",
+              "raw": "http://16.171.52.155:5000/api/farmer/publish-order",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -209,7 +209,7 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:5000/api/farmer/get-orders",
+              "raw": "http://16.171.52.155:5000/api/farmer/get-orders",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -228,7 +228,7 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:5000/api/farmer/view-broker-orders",
+              "raw": "http://16.171.52.155:5000/api/farmer/view-broker-orders",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -260,7 +260,7 @@
               "raw": "{\n  \"vegetableId\": \"{{VEGETABLE_ID}}\",\n  \"quantity\": 200,\n  \"unit\": \"kg\",\n  \"pricePerUnit\": 140,\n  \"location\": \"Colombo Market\",\n  \"quality\": \"standard\",\n  \"description\": \"Buying from farmers for market supply\",\n  \"deliveryDate\": \"2026-02-25\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/api/broker/publish-buy-order",
+              "raw": "http://16.171.52.155:5000/api/broker/publish-buy-order",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -287,7 +287,7 @@
               "raw": "{\n  \"vegetableId\": \"{{VEGETABLE_ID}}\",\n  \"quantity\": 150,\n  \"unit\": \"kg\",\n  \"location\": \"Colombo\",\n  \"quality\": \"premium\",\n  \"description\": \"Fresh tomatoes available for bulk orders\",\n  \"deliveryDate\": \"2026-02-26\"\n}\n\nNOTE: Commission is auto-calculated as 10% of base vegetable price!\nFor 150 kg at Rs. 150 base:\n- Base Total: Rs. 22,500\n- Commission (10%): Rs. 2,250\n- Final Price to Buyer: Rs. 24,750"
             },
             "url": {
-              "raw": "http://localhost:5000/api/broker/publish-sell-order",
+              "raw": "http://16.171.52.155:5000/api/broker/publish-sell-order",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -306,7 +306,7 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:5000/api/broker/get-orders",
+              "raw": "http://16.171.52.155:5000/api/broker/get-orders",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -325,7 +325,7 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:5000/api/broker/view-farmer-orders",
+              "raw": "http://16.171.52.155:5000/api/broker/view-farmer-orders",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -344,7 +344,7 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:5000/api/broker/view-buyer-orders",
+              "raw": "http://16.171.52.155:5000/api/broker/view-buyer-orders",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -371,7 +371,7 @@
               "raw": "{\n  \"orderId\": \"{{ORDER_ID}}\",\n  \"orderType\": \"farmer\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/api/broker/show-interest",
+              "raw": "http://16.171.52.155:5000/api/broker/show-interest",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -403,7 +403,7 @@
               "raw": "{\n  \"vegetableId\": \"{{VEGETABLE_ID}}\",\n  \"quantity\": 50,\n  \"unit\": \"kg\",\n  \"budgetPerUnit\": 160,\n  \"location\": \"Hotel XYZ, Colombo\",\n  \"quality\": \"premium\",\n  \"description\": \"Need fresh tomatoes for daily restaurant orders\",\n  \"deliveryDate\": \"2026-02-25\"\n}"
             },
             "url": {
-              "raw": "http://localhost:5000/api/buyer/publish-order",
+              "raw": "http://16.171.52.155:5000/api/buyer/publish-order",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -422,7 +422,7 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:5000/api/buyer/get-orders",
+              "raw": "http://16.171.52.155:5000/api/buyer/get-orders",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -441,7 +441,7 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:5000/api/buyer/view-broker-selling-orders",
+              "raw": "http://16.171.52.155:5000/api/buyer/view-broker-selling-orders",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -465,7 +465,7 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:5000/api/notifications?limit=10&skip=0",
+              "raw": "http://16.171.52.155:5000/api/notifications?limit=10&skip=0",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -494,7 +494,7 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:5000/api/notifications/{{NOTIFICATION_ID}}/read",
+              "raw": "http://16.171.52.155:5000/api/notifications/{{NOTIFICATION_ID}}/read",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -513,7 +513,7 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:5000/api/notifications/read-all",
+              "raw": "http://16.171.52.155:5000/api/notifications/read-all",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -532,7 +532,7 @@
               }
             ],
             "url": {
-              "raw": "http://localhost:5000/api/notifications/{{NOTIFICATION_ID}}",
+              "raw": "http://16.171.52.155:5000/api/notifications/{{NOTIFICATION_ID}}",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -551,7 +551,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000/api/ping",
+              "raw": "http://16.171.52.155:5000/api/ping",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000",
@@ -565,7 +565,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:5000",
+              "raw": "http://16.171.52.155:5000",
               "protocol": "http",
               "host": ["localhost"],
               "port": "5000"

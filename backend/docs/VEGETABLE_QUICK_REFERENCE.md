@@ -42,7 +42,7 @@ No additional setup needed - everything is auto-configured!
 ### 2. Test API
 ```bash
 # Get all vegetables
-curl http://localhost:5000/api/vegetables \
+curl http://16.171.52.155:5000/api/vegetables \
   -H "Authorization: Bearer {token}"
 
 # Response:
@@ -330,7 +330,7 @@ frontend/
 npm run dev
 
 # Terminal 2: Test API
-curl http://localhost:5000/api/vegetables \
+curl http://16.171.52.155:5000/api/vegetables \
   -H "Authorization: Bearer {your-token}"
 ```
 

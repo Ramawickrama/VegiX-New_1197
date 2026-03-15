@@ -10,7 +10,7 @@ This guide walks through testing the complete Market Price system that enables:
 ---
 
 ## Prerequisites
-- Backend running on `http://localhost:5000`
+- Backend running on `http://16.171.52.155:5000`
 - MongoDB connected and populated with vegetables
 - Valid admin JWT token
 - Valid farmer/broker JWT tokens

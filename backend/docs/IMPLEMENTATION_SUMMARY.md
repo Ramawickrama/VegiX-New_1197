@@ -333,7 +333,7 @@ npm start
 ### Step 3: Test (5 minutes)
 ```bash
 # Test the API
-curl http://localhost:5000/api/vegetables \
+curl http://16.171.52.155:5000/api/vegetables \
   -H "Authorization: Bearer {your-token}"
 ```
 

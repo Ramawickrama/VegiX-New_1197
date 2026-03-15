@@ -110,20 +110,20 @@ Admin updates price → Immediately affects all new orders
 
 ### Update Market Price (Admin Only)
 ```bash
-curl -X PUT http://localhost:5000/api/admin/market-price \
+curl -X PUT http://16.171.52.155:5000/api/admin/market-price \
   -H "Authorization: Bearer ADMIN_TOKEN" \
   -d '{"vegetableId": "...", "pricePerKg": 150}'
 ```
 
 ### Get All Market Prices
 ```bash
-curl -X GET http://localhost:5000/api/admin/market-prices \
+curl -X GET http://16.171.52.155:5000/api/admin/market-prices \
   -H "Authorization: Bearer TOKEN"
 ```
 
 ### Get Price History
 ```bash
-curl -X GET http://localhost:5000/api/admin/price-history/VEGETABLE_ID \
+curl -X GET http://16.171.52.155:5000/api/admin/price-history/VEGETABLE_ID \
   -H "Authorization: Bearer TOKEN"
 ```
 

@@ -52,7 +52,7 @@ Expected output:
 ✓ MongoDB connected successfully
 ╔════════════════════════════════════╗
 ║   VegiX Backend Server Running     ║
-║   URL: http://localhost:5000       ║
+║   URL: http://16.171.52.155:5000       ║
 ╚════════════════════════════════════╝
 ```
 

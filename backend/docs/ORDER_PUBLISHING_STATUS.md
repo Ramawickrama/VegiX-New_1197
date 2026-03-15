@@ -2,7 +2,7 @@
 
 **Date:** February 23, 2026  
 **Status:** ✅ ALL FUNCTIONALITY VERIFIED & WORKING  
-**Backend:** Running on http://localhost:5000  
+**Backend:** Running on http://16.171.52.155:5000  
 **Database:** Connected to MongoDB Atlas
 
 ---
@@ -473,7 +473,7 @@ All order publishing functionality for Farmer, Broker, and Buyer roles is **full
 ---
 
 **Generated:** February 23, 2026  
-**Backend Status:** Running on http://localhost:5000  
+**Backend Status:** Running on http://16.171.52.155:5000  
 **Database:** Connected to MongoDB Atlas  
 **Ready for:** Testing, Integration, Production Deployment
 

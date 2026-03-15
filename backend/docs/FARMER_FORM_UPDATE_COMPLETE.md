@@ -21,7 +21,7 @@ useEffect(() => {
 }, []);
 
 const fetchVegetables = async () => {
-  const response = await axios.get('http://localhost:5000/api/vegetables', {
+  const response = await axios.get('http://16.171.52.155:5000/api/vegetables', {
     headers: { Authorization: `Bearer ${token}` },
   });
   // Handle nested response: { success, count, data: [...] }
@@ -118,7 +118,7 @@ useEffect(() => {
 }, [formData.vegetableId, priceMap]);
 
 const fetchMarketPrices = async () => {
-  const response = await axios.get('http://localhost:5000/api/admin/market-prices', {
+  const response = await axios.get('http://16.171.52.155:5000/api/admin/market-prices', {
     headers: { Authorization: `Bearer ${token}` },
   });
   const prices = response.data.prices || response.data.data || [];
@@ -144,7 +144,7 @@ const fetchMarketPrices = async () => {
 - ✅ `vegetableController.js` correctly exports `getAllVegetables`
 - ✅ Uses `exports.getAllVegetables` pattern
 - ✅ Returns proper response: `{ success: true, count: X, data: [...] }`
-- ✅ Backend API URL verified: `http://localhost:5000`
+- ✅ Backend API URL verified: `http://16.171.52.155:5000`
 - ✅ No 'localhost connection refused' - API responds correctly
 
 **Status:** ✅ Backend working correctly
@@ -208,7 +208,7 @@ Form ready to submit
 ## 🧪 Testing Checklist
 
 ### Prerequisites
-- [ ] Backend running on `http://localhost:5000`
+- [ ] Backend running on `http://16.171.52.155:5000`
 - [ ] MongoDB connected with sample vegetables
 - [ ] Sample market prices added
 
@@ -298,7 +298,7 @@ Form ready to submit
 ### If vegetables don't load:
 ```
 1. Check browser console for errors
-2. Verify backend running: curl http://localhost:5000/api/ping
+2. Verify backend running: curl http://16.171.52.155:5000/api/ping
 3. Verify token in localStorage
 4. Check network tab for API response
 ```

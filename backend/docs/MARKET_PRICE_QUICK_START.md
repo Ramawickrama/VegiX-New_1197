@@ -17,7 +17,7 @@ The Market Price System allows:
 ## Quick Test (5 minutes)
 
 ### Prerequisites
-- Backend running on `http://localhost:5000`
+- Backend running on `http://16.171.52.155:5000`
 - Admin JWT token (from `/api/auth/login`)
 - Farmer JWT token
 - Vegetable ID (from database)
@@ -26,7 +26,7 @@ The Market Price System allows:
 
 #### 1. Admin Sets Market Price
 ```bash
-curl -X PUT http://localhost:5000/api/admin/market-price \
+curl -X PUT http://16.171.52.155:5000/api/admin/market-price \
   -H "Authorization: Bearer ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -39,7 +39,7 @@ curl -X PUT http://localhost:5000/api/admin/market-price \
 
 #### 2. Farmer Publishes Order
 ```bash
-curl -X POST http://localhost:5000/api/farmer/publish-order \
+curl -X POST http://16.171.52.155:5000/api/farmer/publish-order \
   -H "Authorization: Bearer FARMER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -54,7 +54,7 @@ curl -X POST http://localhost:5000/api/farmer/publish-order \
 
 #### 3. Check Market Prices
 ```bash
-curl -X GET http://localhost:5000/api/admin/market-prices \
+curl -X GET http://16.171.52.155:5000/api/admin/market-prices \
   -H "Authorization: Bearer ADMIN_TOKEN"
 ```
 
@@ -62,7 +62,7 @@ curl -X GET http://localhost:5000/api/admin/market-prices \
 
 #### 4. Broker Publishes Selling Order
 ```bash
-curl -X POST http://localhost:5000/api/broker/publish-sell-order \
+curl -X POST http://16.171.52.155:5000/api/broker/publish-sell-order \
   -H "Authorization: Bearer BROKER_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{

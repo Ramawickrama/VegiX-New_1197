@@ -49,7 +49,7 @@ Backend server (server.js) is fully configured with:
 ```
 ╔════════════════════════════════════╗
 ║   VegiX Backend Server Running     ║
-║   URL: http://localhost:5000       ║
+║   URL: http://16.171.52.155:5000       ║
 ╚════════════════════════════════════╝
 
 ✓ MongoDB connected successfully
@@ -60,7 +60,7 @@ Backend server (server.js) is fully configured with:
 ## 🌐 API Base URL
 
 ```
-http://localhost:5000
+http://16.171.52.155:5000
 ```
 
 ### Available Endpoints
@@ -101,7 +101,7 @@ The following MongoDB collections will be created automatically:
 
 ### Test 1: Ping Endpoint
 ```bash
-curl http://localhost:5000/api/ping
+curl http://16.171.52.155:5000/api/ping
 ```
 **Expected Response:**
 ```json
@@ -114,7 +114,7 @@ curl http://localhost:5000/api/ping
 
 ### Test 2: Root Endpoint
 ```bash
-curl http://localhost:5000
+curl http://16.171.52.155:5000
 ```
 **Expected Response:**
 ```json
@@ -188,7 +188,7 @@ npm start
 ```
 ╔════════════════════════════════════╗
 ║   VegiX Backend Server Running     ║
-║   URL: http://localhost:5000       ║
+║   URL: http://16.171.52.155:5000       ║
 ╚════════════════════════════════════╝
 
 ✓ MongoDB connected successfully
@@ -269,7 +269,7 @@ npm run dev
 ```
 
 ### 3. Frontend Will Connect to Backend
-The frontend is configured to call API at `http://localhost:5000`
+The frontend is configured to call API at `http://16.171.52.155:5000`
 
 ### 4. Test Complete Flow
 1. Open http://localhost:3000
@@ -338,7 +338,7 @@ npm run dev
 Frontend (http://localhost:3000)
         ↓ (API Calls via Axios)
         ↓
-Express Server (http://localhost:5000)
+Express Server (http://16.171.52.155:5000)
         ↓ (Database Operations)
         ↓
 MongoDB Atlas Cluster
@@ -382,7 +382,7 @@ For production deployment:
 
 | Component | Status | Details |
 |-----------|--------|---------|
-| Node.js | ✅ Running | localhost:5000 |
+| Node.js | ✅ Running | 16.171.52.155:5000 |
 | Express | ✅ Configured | Serving API |
 | MongoDB | ✅ Connected | Atlas Cluster |
 | Routes | ✅ Registered | 33 endpoints |
@@ -401,7 +401,7 @@ Your VegiX backend is now:
 - ✅ Ready to receive API requests
 - ✅ Prepared for frontend integration
 
-**The backend is now serving at http://localhost:5000** 🚀
+**The backend is now serving at http://16.171.52.155:5000** 🚀
 
 ---
 

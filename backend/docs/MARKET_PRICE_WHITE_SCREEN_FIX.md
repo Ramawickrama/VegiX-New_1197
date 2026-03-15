@@ -163,7 +163,7 @@ setPrices(response.data.prices || []);  // ✅ Correct
 ### Before Fix
 ```javascript
 // MarketPrices.jsx, Line 28
-const response = await axios.get('http://localhost:5000/api/vegetables', {
+const response = await axios.get('http://16.171.52.155:5000/api/vegetables', {
   headers: { Authorization: `Bearer ${token}` },
 });
 setVegetables(response.data || []);  // ❌ WRONG
@@ -172,7 +172,7 @@ setVegetables(response.data || []);  // ❌ WRONG
 ### After Fix
 ```javascript
 // MarketPrices.jsx, Line 28
-const response = await axios.get('http://localhost:5000/api/vegetables', {
+const response = await axios.get('http://16.171.52.155:5000/api/vegetables', {
   headers: { Authorization: `Bearer ${token}` },
 });
 // API returns { success, count, data: [...] }

@@ -69,7 +69,7 @@ setVegetables(response.data.data || []);
 const fetchVegetables = async () => {
   try {
     const token = localStorage.getItem('token');
-    const response = await axios.get('http://localhost:5000/api/vegetables', {
+    const response = await axios.get('http://16.171.52.155:5000/api/vegetables', {
       headers: { Authorization: `Bearer ${token}` },
     });
     // API returns { success, count, data: [...] }
@@ -94,7 +94,7 @@ const fetchVegetablesAndPrices = async () => {
   try {
     const token = localStorage.getItem('token');
     
-    const vegResponse = await axios.get('http://localhost:5000/api/vegetables', {
+    const vegResponse = await axios.get('http://16.171.52.155:5000/api/vegetables', {
       headers: { Authorization: `Bearer ${token}` },
     });
     // API returns { success, count, data: [...] }
@@ -115,7 +115,7 @@ const fetchVegetablesAndPrices = async () => {
   try {
     const token = localStorage.getItem('token');
     
-    const vegResponse = await axios.get('http://localhost:5000/api/vegetables', {
+    const vegResponse = await axios.get('http://16.171.52.155:5000/api/vegetables', {
       headers: { Authorization: `Bearer ${token}` },
     });
     // API returns { success, count, data: [...] }

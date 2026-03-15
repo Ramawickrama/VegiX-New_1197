@@ -130,7 +130,7 @@ process.on('unhandledRejection', (reason) => {
 
 ### API Response Test ✅
 ```
-REQUEST: GET http://localhost:5000/api/ping
+REQUEST: GET http://16.171.52.155:5000/api/ping
 STATUS:  200 OK
 
 RESPONSE:
@@ -315,13 +315,13 @@ npm run dev
 
 ╔════════════════════════════════════╗
 ║   VegiX Backend Server Running     ║
-║   URL: http://localhost:5000       ║
+║   URL: http://16.171.52.155:5000       ║
 ╚════════════════════════════════════╝
 ```
 
 ### Test API
 ```bash
-curl http://localhost:5000/api/ping
+curl http://16.171.52.155:5000/api/ping
 ```
 
 ### Stop Backend

@@ -14,7 +14,7 @@ cd e:\VegiX_1197\backend
 npm install  # if not already done
 npm start
 ```
-Should show: `VegiX Backend Server Running on http://localhost:5000`
+Should show: `VegiX Backend Server Running on http://16.171.52.155:5000`
 
 ### Frontend  
 ```bash
@@ -245,7 +245,7 @@ Should show: `http://localhost:5173`
 ### Issue: CORS errors
 **Solution:**
 - Backend should have `app.use(cors())` at top
-- Frontend should use `http://localhost:5000` (not localhost:3000)
+- Frontend should use `http://16.171.52.155:5000` (not localhost:3000)
 
 ---
 

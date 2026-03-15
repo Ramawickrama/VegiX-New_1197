@@ -2,7 +2,7 @@
 
 ## 🌐 Base URL
 ```
-http://localhost:5000
+http://16.171.52.155:5000
 ```
 
 ## 🔐 Authentication Header (Protected Routes)

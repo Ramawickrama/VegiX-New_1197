@@ -127,7 +127,7 @@ module.exports = app;
 
 ╔════════════════════════════════════╗
 ║   VegiX Backend Server Running     ║
-║   URL: http://localhost:5000       ║
+║   URL: http://16.171.52.155:5000       ║
 ╚════════════════════════════════════╝
 ```
 
@@ -186,7 +186,7 @@ npm run dev  # Uses nodemon for auto-reload
 ✓ MongoDB connected successfully
 ╔════════════════════════════════════╗
 ║   VegiX Backend Server Running     ║
-║   URL: http://localhost:5000       ║
+║   URL: http://16.171.52.155:5000       ║
 ╚════════════════════════════════════╝
 ```
 
@@ -199,7 +199,7 @@ npm start  # Without nodemon
 ### Test API
 ```bash
 # Test server is running
-curl http://localhost:5000/api/ping
+curl http://16.171.52.155:5000/api/ping
 
 # Response:
 {
@@ -455,7 +455,7 @@ All required dependencies are installed:
 
 2. **Test frontend integration:**
    - Start frontend: `npm run dev` in frontend directory
-   - Connect to backend: `http://localhost:5000`
+   - Connect to backend: `http://16.171.52.155:5000`
 
 3. **Monitor logs:**
    - Check for any runtime errors

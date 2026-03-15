@@ -65,14 +65,14 @@ npm run dev
 ```
 ╔════════════════════════════════════╗
 ║   VegiX Backend Server Running     ║
-║   URL: http://localhost:5000       ║
+║   URL: http://16.171.52.155:5000       ║
 ╚════════════════════════════════════╝
 
 ✓ MongoDB connected successfully
 ```
 
 **Test the server:**
-Open browser → http://localhost:5000/api/ping
+Open browser → http://16.171.52.155:5000/api/ping
 
 Should see:
 ```json
@@ -226,7 +226,7 @@ npm run dev
 ```
 1. Open browser DevTools (F12)
 2. Check Console for errors
-3. Verify backend is running (http://localhost:5000/api/ping)
+3. Verify backend is running (http://16.171.52.155:5000/api/ping)
 4. Clear browser cache (Ctrl+Shift+Delete)
 5. Try different browser
 ```
@@ -261,7 +261,7 @@ kill -9 <process-id>
 
 **Register:**
 ```
-POST http://localhost:5000/api/auth/register
+POST http://16.171.52.155:5000/api/auth/register
 Body (JSON):
 {
   "name": "Test User",
@@ -274,7 +274,7 @@ Body (JSON):
 
 **Login:**
 ```
-POST http://localhost:5000/api/auth/login
+POST http://16.171.52.155:5000/api/auth/login
 Body (JSON):
 {
   "email": "admin@vegix.com",
@@ -286,7 +286,7 @@ Copy the token from response for protected routes.
 
 **Get User Stats (Protected):**
 ```
-GET http://localhost:5000/api/admin/user-stats
+GET http://16.171.52.155:5000/api/admin/user-stats
 Headers:
 Authorization: Bearer <your-token-here>
 ```
@@ -346,7 +346,7 @@ npm cache clean --force
 
 ## ✅ Verification Checklist
 
-- [ ] Backend server running on http://localhost:5000
+- [ ] Backend server running on http://16.171.52.155:5000
 - [ ] Frontend running on http://localhost:3000
 - [ ] MongoDB connected successfully
 - [ ] Can login with demo credentials

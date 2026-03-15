@@ -62,7 +62,7 @@ const handleVegetableSelection = (e) => {
 ```javascript
 const updatePromises = selectedVegetables.map((vegetableId) => {
   return axios.put(
-    'http://localhost:5000/api/admin/market-price',
+    'http://16.171.52.155:5000/api/admin/market-price',
     {
       vegetableId,
       pricePerKg: parseFloat(newPrice.pricePerKg),

@@ -279,13 +279,13 @@ cd backend && npm run dev
 ✓ MongoDB connected successfully
 ╔════════════════════════════════════╗
 ║   VegiX Backend Server Running     ║
-║   URL: http://localhost:5000       ║
+║   URL: http://16.171.52.155:5000       ║
 ╚════════════════════════════════════╝
 ```
 
 **Test Server:**
 ```bash
-curl http://localhost:5000/api/ping
+curl http://16.171.52.155:5000/api/ping
 ```
 
 **Stop Server:**

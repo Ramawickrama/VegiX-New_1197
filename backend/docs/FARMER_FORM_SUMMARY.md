@@ -33,7 +33,7 @@ useEffect(() => {
 }, []);
 
 const fetchVegetables = async () => {
-  const response = await axios.get('http://localhost:5000/api/vegetables', {
+  const response = await axios.get('http://16.171.52.155:5000/api/vegetables', {
     headers: { Authorization: `Bearer ${token}` },
   });
   const vegetables = response.data.data || response.data || [];
@@ -105,7 +105,7 @@ useEffect(() => {
 Checked and confirmed:
 - ✅ `vegetableController.js` exports `getAllVegetables` correctly
 - ✅ API returns proper structure: `{ success, count, data: [...] }`
-- ✅ Backend running on `http://localhost:5000`
+- ✅ Backend running on `http://16.171.52.155:5000`
 - ✅ No connection refused errors
 - ✅ All endpoints working correctly
 

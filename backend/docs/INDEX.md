@@ -208,9 +208,9 @@ Buyer:  buyer@vegix.com / password123
 ### Important URLs
 ```
 Frontend:  http://localhost:3000
-Backend:   http://localhost:5000
-API Base:  http://localhost:5000/api
-Health:    http://localhost:5000/api/ping
+Backend:   http://16.171.52.155:5000
+API Base:  http://16.171.52.155:5000/api
+Health:    http://16.171.52.155:5000/api/ping
 ```
 
 ### Critical Configuration
@@ -300,7 +300,7 @@ npm install
 ### Step 2: Check These Things
 - MongoDB connected? Check terminal output
 - Both servers running? Check terminals
-- API responding? Test with `curl http://localhost:5000/api/ping`
+- API responding? Test with `curl http://16.171.52.155:5000/api/ping`
 - Browser console errors? Press F12
 
 ### Step 3: Common Fixes

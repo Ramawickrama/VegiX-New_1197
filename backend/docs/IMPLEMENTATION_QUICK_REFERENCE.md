@@ -431,15 +431,15 @@ npm run dev
 ### Test Endpoints with Curl
 ```bash
 # Get market prices
-curl http://localhost:5000/api/farmer/market-prices \
+curl http://16.171.52.155:5000/api/farmer/market-prices \
   -H "Authorization: Bearer YOUR_TOKEN"
 
 # Get dashboard stats
-curl http://localhost:5000/api/farmer/dashboard-stats \
+curl http://16.171.52.155:5000/api/farmer/dashboard-stats \
   -H "Authorization: Bearer YOUR_TOKEN"
 
 # Get high-demand vegetables
-curl http://localhost:5000/api/analytics/high-demand \
+curl http://16.171.52.155:5000/api/analytics/high-demand \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 

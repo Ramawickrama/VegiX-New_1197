@@ -481,7 +481,7 @@ npm start
 # You should see: ✓ Successfully seeded 12 vegetables
 
 # 2. Test API
-curl http://localhost:5000/api/vegetables \
+curl http://16.171.52.155:5000/api/vegetables \
   -H "Authorization: Bearer {token}"
 
 # 3. Check FarmerPublishOrder form
