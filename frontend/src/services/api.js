@@ -2,12 +2,12 @@ import axios from "axios";
 
 const envApiUrl = import.meta.env.VITE_API_URL || "";
 
-export const API_BASE_URL = envApiUrl 
+export const API_BASE_URL = envApiUrl
     ? (envApiUrl.startsWith('/') ? envApiUrl : envApiUrl)
-    : "http://localhost:5000";
+    : "http://16.171.52.155:5000";
 
 const baseUrl = envApiUrl === "/api"
-    ? "/api" 
+    ? "/api"
     : `${API_BASE_URL}/api`;
 
 export const API_FULL_BASE_URL = baseUrl;
