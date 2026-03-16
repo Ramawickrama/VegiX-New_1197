@@ -6,9 +6,12 @@ export const API_BASE_URL = envApiUrl
     ? (envApiUrl.startsWith('/') ? envApiUrl : envApiUrl)
     : "http://16.171.52.155:5000";
 
-const baseUrl = envApiUrl === "/api"
-    ? "/api"
-    : `${API_BASE_URL}/api`;
+const isDev = import.meta.env.DEV;
+const baseUrl = isDev 
+    ? "/api" 
+    : (envApiUrl === "/api" 
+        ? "/api" 
+        : `${API_BASE_URL}/api`);
 
 export const API_FULL_BASE_URL = baseUrl;
 

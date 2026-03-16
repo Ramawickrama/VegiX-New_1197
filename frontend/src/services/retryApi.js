@@ -1,9 +1,11 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://16.171.52.155:5000';
+const envApiUrl = import.meta.env.VITE_API_URL || "";
+const API_BASE_URL = envApiUrl || 'http://16.171.52.155:5000';
+const isDev = import.meta.env.DEV;
 
 const API = axios.create({
-  baseURL: `${API_BASE_URL}/api`,
+  baseURL: isDev ? '/api' : `${API_BASE_URL}/api`,
   withCredentials: true,
   timeout: 30000,
 });
