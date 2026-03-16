@@ -38,10 +38,18 @@ const AdminDashboard = ({ user }) => {
         axios.get(`${API_BASE_URL}/api/admin/demand-analysis`, { headers })
       ]);
 
-      setStats(statsRes.data);
+      const statsData = statsRes?.data || {};
+      setStats({
+        totalUsers: statsData.totalUsers || 0,
+        farmers: statsData.farmers || 0,
+        brokers: statsData.brokers || 0,
+        buyers: statsData.buyers || 0,
+        admins: statsData.admins || 0,
+      });
 
       // Top 5 vegetables by combined supply + demand (best performers)
-      const sortedDemands = (demandRes.data.demands || [])
+      const demandsData = demandRes?.data?.demands || [];
+      const sortedDemands = (Array.isArray(demandsData) ? demandsData : [])
         .map(d => ({
           name: d.vegetable?.name || 'Unknown',
           demand: d.demandQuantity || 0,
@@ -184,19 +192,10 @@ const AdminDashboard = ({ user }) => {
           </div>
           <div className="card-body">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <button onClick={() => window.location.href = '/admin/market-prices'} 
-                className="btn" style={{ justifyContent: 'flex-start', background: '#f0fdf4', color: '#166534' }}>
-                💰 Update Market Prices
-              </button>
-              <button onClick={() => window.location.href = '/admin/notice-management'} 
-                className="btn" style={{ justifyContent: 'flex-start', background: '#eff6ff', color: '#1d4ed8' }}>
-                📢 Post Announcement
-              </button>
-              <button onClick={() => window.location.href = '/admin/user-management'} 
-                className="btn" style={{ justifyContent: 'flex-start', background: '#fef3c7', color: '#b45309' }}>
-                👥 Manage Users
-              </button>
-              <button onClick={() => window.location.href = '/admin/demand-analysis'} 
+              <button onClick={() => window.location.hash = '#/admin/market-prices'} 
+              <button onClick={() => window.location.hash = '#/admin/notice-management'} 
+              <button onClick={() => window.location.hash = '#/admin/user-management'} 
+              <button onClick={() => window.location.hash = '#/admin/demand-analysis'}
                 className="btn" style={{ justifyContent: 'flex-start', background: '#f3e8ff', color: '#7c3aed' }}>
                 🔮 View Forecasts
               </button>

@@ -34,7 +34,8 @@ const fetchData = async () => {
       const res = await axios.get(`${API_BASE_URL}/api/admin/vegetables`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setVegetables(res.data.data.map(v => ({
+      const vegData = res?.data?.data || res?.data || [];
+      setVegetables(vegData.map(v => ({
         ...v,
         editablePrice: v.currentPrice,
         editableMin: v.minPrice,
@@ -222,7 +223,7 @@ const fetchData = async () => {
               </tr>
             </thead>
             <tbody>
-{vegetables.map((v) => (
+              {(vegetables || []).map((v) => (
                 <tr key={v._id}>
                   <td><span className="badge badge-open">{v.vegetableId}</span></td>
                   <td>

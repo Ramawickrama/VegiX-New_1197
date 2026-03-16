@@ -88,7 +88,7 @@ function App() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     localStorage.removeItem('userId');
-    window.location.href = '/login';
+    window.location.hash = '/login';
   };
 
   return (
