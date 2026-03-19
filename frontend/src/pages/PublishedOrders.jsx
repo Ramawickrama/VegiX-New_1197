@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import '../styles/AdminPages.css';
-import { API_BASE_URL } from '../services/api';
+import api from '../api';
 
 const PublishedOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -29,10 +28,7 @@ const PublishedOrders = () => {
 
   const fetchVegetables = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const res = await axios.get(`${API_BASE_URL}/api/vegetables`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get('/vegetables');
       const vegData = res.data.data || res.data;
       setVegetables(Array.isArray(vegData) ? vegData : []);
     } catch (err) {
@@ -43,9 +39,7 @@ const PublishedOrders = () => {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
-      const res = await axios.get(`${API_BASE_URL}/api/admin/published-orders`, {
-        headers: { Authorization: `Bearer ${token}` },
+      const res = await api.get('/admin/published-orders', {
         params: {
           date: filters.date,
           vegetableId: filters.vegetableId,
@@ -94,7 +88,6 @@ const PublishedOrders = () => {
       </div>
 
       <div className="page-content">
-        {/* FILTERS */}
         <div className="filter-bar" style={{ display: 'flex', gap: '20px', marginBottom: '30px', backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', flexWrap: 'wrap' }}>
           <div className="filter-group">
             <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>📅 Date</label>
@@ -136,7 +129,6 @@ const PublishedOrders = () => {
           </div>
         </div>
 
-        {/* SUMMARY CARDS */}
         <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '30px' }}>
           <div className="info-card" style={{ borderLeft: '5px solid #2ecc71' }}>
             <h3 style={{ color: '#7f8c8d' }}>📦 Total Supply</h3>
@@ -157,7 +149,6 @@ const PublishedOrders = () => {
           </div>
         </div>
 
-        {/* ORDERS TABLE */}
         <div className="data-card">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
             <h2>📋 All Published Orders ({orders.length})</h2>

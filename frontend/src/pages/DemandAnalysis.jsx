@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   BarChart, Bar, ComposedChart, Area
 } from 'recharts';
 import '../styles/AdminPages.css';
-import { API_BASE_URL } from '../services/api';
+import api from '../api';
 
 const DemandAnalysis = () => {
   const [demands, setDemands] = useState([]);
@@ -34,15 +33,10 @@ const DemandAnalysis = () => {
   const fetchDemandAnalysis = async (showLoading = true) => {
     try {
       if (showLoading) setLoading(true);
-      const token = localStorage.getItem('token');
       
       const [demandRes, vegRes] = await Promise.all([
-        axios.get(`${API_BASE_URL}/api/admin/demand-analysis`, {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
-        axios.get(`${API_BASE_URL}/api/vegetables`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
+        api.get('/admin/demand-analysis'),
+        api.get('/vegetables')
       ]);
 
       setDemands(demandRes.data.demands || []);
@@ -70,10 +64,7 @@ const DemandAnalysis = () => {
   const fetch3TierForecast = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_BASE_URL}/api/admin/demand-analysis-3tier`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await api.get('/admin/demand-analysis-3tier');
       setForecast3Tier(response.data.data || []);
       if (response.data.data?.length > 0) {
         setSelectedVeg(response.data.data[0]);
@@ -88,10 +79,7 @@ const DemandAnalysis = () => {
   const analyzeDemand = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
-      await axios.post(`${API_BASE_URL}/api/admin/analyze-demand`, {}, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.post('/admin/analyze-demand', {});
       fetchDemandAnalysis();
     } catch (error) {
       console.error('Error analyzing demand:', error);
@@ -147,7 +135,6 @@ const DemandAnalysis = () => {
         </div>
       </div>
 
-      {/* 3-Tier Forecast Section */}
       {show3Tier && (
         <div style={{ background: '#f0f9ff', padding: '20px', borderRadius: '12px', marginBottom: '20px', border: '1px solid #bae6fd' }}>
           <h3 style={{ margin: '0 0 15px 0', color: '#0369a1' }}>🔮 3-Tier Forecasting Model</h3>
@@ -176,7 +163,6 @@ const DemandAnalysis = () => {
           <button onClick={analyzeDemand} className="btn-primary">🔄 Re-run Market Analysis</button>
         </div>
 
-        {/* TREND CHART */}
         <div className="data-card chart-section">
           <h2>Market Activity (Last 7 Days)</h2>
           <div style={{ width: '100%', height: 300 }}>
@@ -194,10 +180,8 @@ const DemandAnalysis = () => {
           </div>
         </div>
 
-        {/* 3-Tier Forecast Details */}
         {show3Tier && selectedVeg && (
           <>
-            {/* Vegetable Selector */}
             <div className="data-card" style={{ marginBottom: '20px' }}>
               <h3 style={{ marginBottom: '15px' }}>Select Vegetable for Detailed Forecast</h3>
               <select 
@@ -216,9 +200,7 @@ const DemandAnalysis = () => {
               </select>
             </div>
 
-            {/* 3-Tier Forecast Cards */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginBottom: '20px' }}>
-              {/* 7-Day Tactical */}
               <div className="data-card" style={{ borderLeft: '4px solid #3b82f6' }}>
                 <h3>📅 7-Day Tactical Forecast</h3>
                 <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#3b82f6', margin: '15px 0' }}>
@@ -239,7 +221,6 @@ const DemandAnalysis = () => {
                 )}
               </div>
 
-              {/* 30-Day Operational */}
               <div className="data-card" style={{ borderLeft: '4px solid #8b5cf6' }}>
                 <h3>📆 30-Day Operational Forecast</h3>
                 <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#8b5cf6', margin: '15px 0' }}>
@@ -262,7 +243,6 @@ const DemandAnalysis = () => {
                 )}
               </div>
 
-              {/* 3-Month Strategic */}
               <div className="data-card" style={{ borderLeft: '4px solid #f59e0b' }}>
                 <h3>🗓️ 3-Month Strategic Forecast</h3>
                 <div style={{ marginBottom: '15px' }}>
@@ -283,7 +263,6 @@ const DemandAnalysis = () => {
               </div>
             </div>
 
-            {/* Confidence Score */}
             <div className="data-card" style={{ marginBottom: '20px', background: '#f0fdf4', border: '1px solid #bbf7d0' }}>
               <h3 style={{ margin: '0 0 15px 0', color: '#166534' }}>🎯 Overall Confidence Score</h3>
               <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
@@ -303,7 +282,6 @@ const DemandAnalysis = () => {
               </div>
             </div>
 
-            {/* All Vegetables Summary */}
             <div className="data-card">
               <h3>All Vegetables 3-Tier Forecast Summary</h3>
               <table className="data-table">
@@ -346,7 +324,6 @@ const DemandAnalysis = () => {
           </>
         )}
 
-        {/* Supply & Demand Breakdown - All Vegetables */}
         <div className="data-card">
           <h2>Supply & Demand Breakdown</h2>
           {vegetables.length > 0 ? (

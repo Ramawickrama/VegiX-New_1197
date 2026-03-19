@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import '../styles/AdminPages.css';
-import { API_BASE_URL } from '../services/api';
 
 const MarketPrices = () => {
   const [vegetables, setVegetables] = useState([]);
@@ -30,10 +29,7 @@ const MarketPrices = () => {
 const fetchData = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
-      const res = await axios.get(`${API_BASE_URL}/api/admin/vegetables`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get('/admin/vegetables');
       const vegData = res?.data?.data || res?.data || [];
       setVegetables(vegData.map(v => ({
         ...v,
@@ -76,19 +72,13 @@ const fetchData = async () => {
     
     try {
       setUploading(true);
-      const token = localStorage.getItem('token');
       const formData = new FormData();
       formData.append('image', selectedImage);
       
-      const res = await axios.post(
-        `${API_BASE_URL}/api/vegetables/${imageVeg._id}/image`,
+      const res = await api.post(
+        `/vegetables/${imageVeg._id}/image`,
         formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data'
-          }
-        }
+        { headers: { 'Content-Type': 'multipart/form-data' } }
       );
       
       setSuccess('Image uploaded successfully!');
@@ -107,7 +97,7 @@ const fetchData = async () => {
   const openImageModal = (veg) => {
     setImageVeg(veg);
     setSelectedImage(null);
-    setImagePreview(veg.imageUrl ? `${API_BASE_URL}${veg.imageUrl}` : null);
+    setImagePreview(veg.imageUrl ? veg.imageUrl : null);
     setShowImageModal(true);
   };
 
@@ -119,13 +109,10 @@ const fetchData = async () => {
 
   const updateIndividualPrice = async (veg) => {
     try {
-      const token = localStorage.getItem('token');
-      await axios.put(`${API_BASE_URL}/api/admin/vegetables/${veg._id}/price`, {
+      await api.put(`/admin/vegetables/${veg._id}/price`, {
         currentPrice: parseFloat(veg.editablePrice),
         minPrice: parseFloat(veg.editableMin),
         maxPrice: parseFloat(veg.editableMax)
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
       });
 
       setSuccess(`Updated ${veg.name} successfully!`);
@@ -139,8 +126,7 @@ const fetchData = async () => {
   const handleAddVegetable = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
-      await axios.post(`${API_BASE_URL}/api/admin/vegetables`, {
+      await api.post('/admin/vegetables', {
         name: newVeg.name,
         nameSi: newVeg.nameSi,
         nameTa: newVeg.nameTa,
@@ -148,8 +134,6 @@ const fetchData = async () => {
         currentPrice: newVeg.price,
         minPrice: newVeg.min,
         maxPrice: newVeg.max
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
       });
 
       setSuccess('New vegetable added!');
@@ -169,14 +153,11 @@ const fetchData = async () => {
   const handleUpdateVegetable = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
-      await axios.put(`${API_BASE_URL}/api/admin/vegetables/${editingVeg._id}`, {
+      await api.put(`/admin/vegetables/${editingVeg._id}`, {
         name: editingVeg.name,
         nameSi: editingVeg.nameSi,
         nameTa: editingVeg.nameTa,
         category: editingVeg.category
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
       });
 
       setSuccess('Vegetable updated successfully!');
@@ -246,7 +227,7 @@ const fetchData = async () => {
                     >
                       {v.imageUrl ? (
                         <img 
-                          src={`${API_BASE_URL}${v.imageUrl}`} 
+                          src={v.imageUrl} 
                           alt={v.name}
                           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />

@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { initializeSocket } from "../services/socketService";
-
-const API_BASE = "/api";
+import api from "../api";
 
 export default function BuyerOrders() {
   const [orders, setOrders] = useState([]);
@@ -22,23 +21,9 @@ export default function BuyerOrders() {
         throw new Error("No authentication token");
       }
       
-      const url = `${API_BASE}/orders/buyer-orders`;
-
-      const res = await fetch(url, {
-        headers: { 
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!res.ok) {
-        const errText = await res.text();
-        throw new Error(`Failed to fetch (${res.status}): ${errText}`);
-      }
-
-      const data = await res.json();
+      const res = await api.get('/orders/buyer-orders');
+      const data = res.data;
       
-      // Handle multiple response formats safely
       let ordersArray = [];
       if (data && typeof data === 'object') {
         if (Array.isArray(data)) {
@@ -50,7 +35,6 @@ export default function BuyerOrders() {
         }
       }
 
-      // Ensure all items have required fields
       ordersArray = ordersArray.map(order => ({
         id: order.id || order._id,
         _id: order._id || order.id,

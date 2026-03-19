@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import VegetableSelect from '../components/VegetableSelect';
 import '../styles/BrokerBuyer.css';
-import { API_BASE_URL } from '../services/api';
-
-const API_BASE = `${API_BASE_URL}/api/buyer`;
+import api from '../api';
 
 const MarketOrders = () => {
     const [orders, setOrders] = useState([]);
@@ -35,8 +32,6 @@ const MarketOrders = () => {
     const fetchOrders = async () => {
         try {
             setLoading(true);
-            const token = localStorage.getItem('token');
-            
             const params = new URLSearchParams();
             if (filters.vegetableId) params.append('vegetableId', filters.vegetableId);
             if (filters.district) params.append('district', filters.district);
@@ -44,9 +39,7 @@ const MarketOrders = () => {
             if (filters.maxQuantity) params.append('maxQuantity', filters.maxQuantity);
             if (filters.date) params.append('date', filters.date);
 
-            const res = await axios.get(`${API_BASE}/market-orders?${params.toString()}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.get(`/buyer/market-orders?${params.toString()}`);
             setOrders(res.data);
         } catch (error) {
             console.error(error);
@@ -82,10 +75,7 @@ const MarketOrders = () => {
 
     const handleContact = async (orderId) => {
         try {
-            const token = localStorage.getItem('token');
-            const res = await axios.post(`${API_BASE}/market-orders/${orderId}/contact`, {}, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.post(`/buyer/market-orders/${orderId}/contact`, {});
 
             if (res.data.success && res.data.conversationId) {
                 navigate(`/messages?conversationId=${res.data.conversationId}`);

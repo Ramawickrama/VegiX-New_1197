@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
 import { io } from 'socket.io-client';
+import api from '../api';
 
 const SocketContext = createContext(null);
 
@@ -68,15 +69,11 @@ export const SocketProvider = ({ children }) => {
           newSocket.emit('join_room', `broker:${user._id}`);
         }
 
-        // Fetch initial unread message count
-        fetch(`/api/chat/unread`, {
-          headers: { Authorization: `Bearer ${token}` }
-        })
-          .then(res => res.json())
+        api.get('/chat/unread')
           .then(data => {
-            if (data.success) {
-              setUnreadCount(data.unreadCount || 0);
-              setUnreadMessageCount(data.unreadCount || 0);
+            if (data.data.success) {
+              setUnreadCount(data.data.unreadCount || 0);
+              setUnreadMessageCount(data.data.unreadCount || 0);
             }
           })
           .catch(err => console.log('Error fetching unread count:', err));
@@ -218,14 +215,9 @@ export const SocketProvider = ({ children }) => {
 
   const refreshUnreadMessageCount = useCallback(async () => {
     try {
-      const token = localStorage.getItem('token');
-      if (!token) return;
-      const res = await fetch(`/api/chat/unread`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      const data = await res.json();
-      if (data.success) {
-        setUnreadMessageCount(data.unreadCount || 0);
+      const res = await api.get('/chat/unread');
+      if (res.data.success) {
+        setUnreadMessageCount(res.data.unreadCount || 0);
       }
     } catch (err) {
       console.log('[SocketContext] Error refreshing unread count:', err);

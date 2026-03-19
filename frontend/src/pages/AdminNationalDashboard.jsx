@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
   PieChart, Pie, Cell, LineChart, Line, AreaChart, Area
 } from 'recharts';
 import '../styles/AdminPages.css';
-import { API_BASE_URL } from '../services/api';
+import api from '../api';
 
 const COLORS = ['#4CAF50', '#2196F3', '#FF9800', '#E91E63', '#9C27B0', '#00BCD4'];
 
@@ -24,10 +23,7 @@ const AdminNationalDashboard = () => {
   const fetchOverview = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_BASE_URL}/api/market/overview`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await api.get('/market/overview');
       setOverview(response.data);
     } catch (error) {
       console.error('Error fetching overview:', error);
@@ -38,10 +34,8 @@ const AdminNationalDashboard = () => {
 
   const fetchDateRangeData = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(
-        `${API_BASE_URL}/api/market/date-range?startDate=${dateRange.startDate}&endDate=${dateRange.endDate}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+      const response = await api.get(
+        `/market/date-range?startDate=${dateRange.startDate}&endDate=${dateRange.endDate}`
       );
       return response.data;
     } catch (error) {
@@ -79,7 +73,6 @@ const AdminNationalDashboard = () => {
       </div>
 
       <div className="page-content">
-        {/* KEY METRICS */}
         <div className="stats-grid">
           <div className="stat-card">
             <div className="stat-icon">📦</div>
@@ -115,7 +108,6 @@ const AdminNationalDashboard = () => {
           </div>
         </div>
 
-        {/* SUPPLY VS DEMAND CHART */}
         <div className="data-card">
           <h3>📊 National Supply vs Demand</h3>
           <div style={{ width: '100%', height: 350 }}>
@@ -144,7 +136,6 @@ const AdminNationalDashboard = () => {
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginTop: '20px' }}>
-          {/* VEGETABLE CATEGORY DISTRIBUTION */}
           <div className="data-card">
             <h3>🥬 Vegetable Category Distribution</h3>
             <div style={{ width: '100%', height: 300 }}>
@@ -170,7 +161,6 @@ const AdminNationalDashboard = () => {
             </div>
           </div>
 
-          {/* TOP VEGETABLES */}
           <div className="data-card">
             <h3>🏆 Top Vegetables by Activity</h3>
             <div style={{ width: '100%', height: 300, overflowY: 'auto' }}>
@@ -198,7 +188,6 @@ const AdminNationalDashboard = () => {
           </div>
         </div>
 
-        {/* FARMER PARTICIPATION */}
         <div className="data-card" style={{ marginTop: '20px' }}>
           <h3>👨‍🌾 Farmer Participation (Last 30 Days)</h3>
           <div className="stats-grid" style={{ marginBottom: '20px' }}>
@@ -228,7 +217,6 @@ const AdminNationalDashboard = () => {
           </div>
         </div>
 
-        {/* BROKER TRANSACTIONS */}
         <div className="data-card" style={{ marginTop: '20px' }}>
           <h3>🤝 Broker Transactions (Last 30 Days)</h3>
           <div className="stats-grid" style={{ marginBottom: '20px' }}>
@@ -247,7 +235,6 @@ const AdminNationalDashboard = () => {
           </div>
         </div>
 
-        {/* RECENT CONVERSATIONS */}
         <div className="data-card" style={{ marginTop: '20px' }}>
           <h3>💬 Recent Market Conversations</h3>
           {overview?.recentConversations?.length > 0 ? (

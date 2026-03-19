@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import '../styles/BrokerBuyer.css';
-import { API_BASE_URL } from '../services/api';
+import api from '../api';
 
 const BrokerMarketPrices = () => {
     const [prices, setPrices] = useState([]);
@@ -18,9 +17,7 @@ const BrokerMarketPrices = () => {
                     setLoading(false);
                     return;
                 }
-                const response = await axios.get(`${API_BASE_URL}/api/broker/market-prices/today`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                const response = await api.get('/broker/market-prices/today');
                 setPrices(response.data || []);
                 setError(null);
             } catch (err) {
@@ -80,7 +77,6 @@ const BrokerMarketPrices = () => {
                 <p>Prices issued by Admin for the entire ecosystem</p>
             </div>
 
-            {/* Table View */}
             <div style={{ background: 'white', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                     <thead style={{ background: 'linear-gradient(135deg, #27ae60 0%, #2ecc71 100%)', color: 'white' }}>
@@ -148,7 +144,6 @@ const BrokerMarketPrices = () => {
                 </table>
             </div>
 
-            {/* Card Grid (Alternative View) */}
             <h3 style={{ marginTop: '30px', marginBottom: '15px', color: '#333' }}>Quick View</h3>
             <div className="card-grid">
                 {(prices || []).map((market) => (

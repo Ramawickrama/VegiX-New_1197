@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area
 } from 'recharts';
 import '../styles/AdminPages.css';
-import { API_BASE_URL } from '../services/api';
+import api from '../api';
 
 const VegetablePriceHistory = () => {
     const { id } = useParams();
@@ -18,10 +17,7 @@ const VegetablePriceHistory = () => {
     const fetchData = useCallback(async () => {
         try {
             setLoading(true);
-            const token = localStorage.getItem('token');
-            const headers = { Authorization: `Bearer ${token}` };
-
-            const res = await axios.get(`${API_BASE_URL}/api/market-prices/${id}`, { headers });
+            const res = await api.get(`/market-prices/${id}`);
 
             setHistory(res.data.historicalData || []);
             setVegetable({
@@ -80,7 +76,6 @@ const VegetablePriceHistory = () => {
 
                 <div className="dashboard-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px' }}>
 
-                    {/* CHART CARD */}
                     <div className="data-card" style={{ padding: '20px' }}>
                         <h3>Market Price Trend (Last 30 Days)</h3>
                         <div style={{ width: '100%', height: 400, marginTop: '20px' }}>
@@ -129,7 +124,6 @@ const VegetablePriceHistory = () => {
                         </div>
                     </div>
 
-                    {/* TABLE CARD */}
                     <div className="data-card">
                         <h3>Detailed Daily Logs</h3>
                         <table className="data-table">

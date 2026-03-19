@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-
-const API_BASE = "/api";
+import api from '../../api';
 
 export default function BuyerOrders() {
-  // State initialization - ALWAYS as arrays
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [vegetables, setVegetables] = useState([]);
@@ -12,35 +10,16 @@ export default function BuyerOrders() {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filter states
   const [vegetableId, setVegetableId] = useState("");
   const [date, setDate] = useState("");
   const [district, setDistrict] = useState("");
 
   const navigate = useNavigate();
 
-  // Safe fetch wrapper
-  const safeFetch = async (url, options = {}) => {
-    const token = localStorage.getItem("token");
-    const response = await fetch(url, {
-      ...options,
-      headers: {
-        ...options.headers,
-        Authorization: `Bearer ${token}`
-      }
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-  };
-
-  // Fetch vegetables - handle response format { success, data }
   const fetchVegetables = useCallback(async () => {
     try {
-      const data = await safeFetch(`${API_BASE}/vegetables`);
-      // Handle both direct array and { data: [] } formats
-      const vegArray = Array.isArray(data) ? data : (data?.data || []);
+      const res = await api.get('/vegetables');
+      const vegArray = Array.isArray(res.data) ? res.data : (res.data?.data || []);
       setVegetables(vegArray);
     } catch (err) {
       console.error("Error fetching vegetables:", err);
@@ -48,24 +27,22 @@ export default function BuyerOrders() {
     }
   }, []);
 
-  // Fetch orders - handle response format { orders: [] } or direct array
   const fetchOrders = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
       
-      // Build query params
       const params = new URLSearchParams();
       if (vegetableId) params.append("vegetableId", vegetableId);
       if (date) params.append("date", date);
       if (district) params.append("district", district);
 
       const queryString = params.toString();
-      const url = `${API_BASE}/buyer-orders${queryString ? "?" + queryString : ""}`;
+      const url = `/broker/buyer-orders${queryString ? "?" + queryString : ""}`;
 
-      const data = await safeFetch(url);
+      const res = await api.get(url);
+      const data = res.data;
       
-      // Handle both { orders: [] } and direct array formats
       let ordersArray = [];
       if (Array.isArray(data)) {
         ordersArray = data;

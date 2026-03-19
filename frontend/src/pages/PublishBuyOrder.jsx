@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import VegetableSelect from '../components/VegetableSelect';
 import '../styles/BrokerBuyer.css';
-import { API_BASE_URL } from '../services/api';
+import api from '../api';
 
 const PublishBuyOrder = () => {
     const [formData, setFormData] = useState({
@@ -16,13 +15,9 @@ const PublishBuyOrder = () => {
     const [vegetableDetails, setVegetableDetails] = useState([]);
 
     useEffect(() => {
-        // Fetch vegetables for price reference
         const fetchRef = async () => {
             try {
-                const token = localStorage.getItem('token');
-                const res = await axios.get(`${API_BASE_URL}/api/broker/market-prices/today`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                const res = await api.get('/broker/market-prices/today');
                 setVegetableDetails(res.data);
             } catch (err) {
                 console.error(err);
@@ -42,11 +37,8 @@ const PublishBuyOrder = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const token = localStorage.getItem('token');
             const vegId = Array.isArray(formData.vegetableId) ? formData.vegetableId[0] : formData.vegetableId;
-            await axios.post(`${API_BASE_URL}/api/broker/buy-orders`, { ...formData, vegetableId: vegId }, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            await api.post('/broker/buy-orders', { ...formData, vegetableId: vegId });
             setMessage('Buy order published successfully! Visible only to Farmers.');
             setFormData({ vegetableId: '', quantityRequired: '', collectionLocation: '' });
             setAdminPrice(0);

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import '../styles/AdminPages.css';
-import { API_BASE_URL } from '../services/api';
+import api from '../api';
 
 const FutureDemand = () => {
   const [forecasts, setForecasts] = useState([]);
@@ -16,10 +15,7 @@ const FutureDemand = () => {
 
   const fetchForecasts = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_BASE_URL}/api/admin/demand-forecast?months=3`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await api.get('/admin/demand-forecast?months=3');
       setForecasts(response.data.data || []);
       if (response.data.data?.length > 0) {
         setSelectedVeg(response.data.data[0]);
@@ -56,7 +52,6 @@ const FutureDemand = () => {
         </div>
       </div>
 
-      {/* Methodology Section */}
       {showMethodology && (
         <div style={{ background: '#f0f9ff', padding: '20px', borderRadius: '12px', marginBottom: '20px', border: '1px solid #bae6fd' }}>
           <h3 style={{ margin: '0 0 15px 0', color: '#0369a1' }}>📐 Forecasting Methodology</h3>
@@ -99,7 +94,6 @@ const FutureDemand = () => {
       )}
 
       <div className="page-content">
-        {/* Vegetable Selector */}
         <div className="data-card" style={{ marginBottom: '20px' }}>
           <h3 style={{ marginBottom: '15px' }}>🔍 Select Vegetable for Detailed Forecast</h3>
           <select 
@@ -118,7 +112,6 @@ const FutureDemand = () => {
           </select>
         </div>
 
-        {/* Selected Vegetable Forecast Details */}
         {selectedVeg && (
           <>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', marginBottom: '20px' }}>
@@ -144,7 +137,6 @@ const FutureDemand = () => {
               </div>
             </div>
 
-            {/* Forecast Chart */}
             <div className="data-card" style={{ marginBottom: '20px' }}>
               <h3 style={{ marginBottom: '20px' }}>📈 3-Month Demand Forecast: {selectedVeg.vegetable.name}</h3>
               <div style={{ height: '300px' }}>
@@ -163,7 +155,6 @@ const FutureDemand = () => {
               </div>
             </div>
 
-            {/* Monthly Forecast Table */}
             <div className="data-card">
               <h3 style={{ marginBottom: '20px' }}>📅 Monthly Forecast Details</h3>
               <table className="data-table">
@@ -216,7 +207,6 @@ const FutureDemand = () => {
           </>
         )}
 
-        {/* All Vegetables Summary */}
         <div className="data-card" style={{ marginTop: '30px' }}>
           <h3 style={{ marginBottom: '20px' }}>🌾 All Vegetables Forecast Summary</h3>
           <table className="data-table">

@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { API_BASE_URL } from '../services/api';
 import { useSocket } from '../contexts/SocketContext';
 import { useTranslation } from 'react-i18next';
+import api from '../api';
 
 const SRI_LANKA_DISTRICTS = [
   'Ampara', 'Anuradhapura', 'Badulla', 'Batticaloa', 'Colombo',
@@ -20,7 +19,6 @@ const CITIES = [
   'Kurunegala', 'Mannar', 'Matale', 'Moneragala', 'Polonnaruwa'
 ];
 
-// Fallback vegetables in case API fails
 const FALLBACK_VEGETABLES = [
   { _id: '1', name: 'Tomato' },
   { _id: '2', name: 'Potato' },
@@ -52,7 +50,6 @@ const FarmerBrokerOrders = () => {
     return `${en}${si ? ' | ' + si : ''}${ta ? ' | ' + ta : ''}` || 'Unknown';
   };
 
-  // === STATE ===
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -67,7 +64,6 @@ const FarmerBrokerOrders = () => {
     maxKg: ''
   });
 
-  // === FETCH DATA ===
   const fetchOrders = useCallback(async () => {
     try {
       setLoading(true);
@@ -79,12 +75,8 @@ const FarmerBrokerOrders = () => {
         return;
       }
 
-      // Fetch vegetables - API returns { success: true, data: [...] }
       try {
-        const vegResponse = await axios.get(`${API_BASE_URL}/api/vegetables`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        // Handle response format: { success: true, data: [...] } or just [...]
+        const vegResponse = await api.get('/vegetables');
         const vegData = vegResponse.data?.data || vegResponse.data || [];
         if (vegData.length > 0) {
           setVegetables(vegData);
@@ -98,10 +90,7 @@ const FarmerBrokerOrders = () => {
         setVegetables(FALLBACK_VEGETABLES);
       }
 
-      // Fetch broker orders
-      const response = await axios.get(`${API_BASE_URL}/api/farmer/broker-buying-requests`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get('/farmer/broker-buying-requests');
 
       console.log('API Response:', response.data);
 
@@ -125,11 +114,9 @@ const FarmerBrokerOrders = () => {
     fetchOrders();
   }, [fetchOrders]);
 
-  // === SOCKET ===
   useEffect(() => {
     if (!socket) return;
 
-    // Refresh orders when any global broker order changes
     const reloadOrders = () => fetchOrders();
 
     socket.on("brokerOrderCreated", reloadOrders);
@@ -143,35 +130,29 @@ const FarmerBrokerOrders = () => {
     };
   }, [socket, fetchOrders]);
 
-  // === FILTER ===
   const filteredOrders = orders.filter(order => {
-    // Vegetable filter
     if (filters.vegetable) {
       const match = order?.vegetableName?.toLowerCase().includes(filters.vegetable.toLowerCase());
       if (!match) return false;
     }
 
-    // District filter
     if (filters.district) {
       const orderDistrict = order?.district || order?.location?.district || '';
       const match = orderDistrict.toLowerCase() === filters.district.toLowerCase();
       if (!match) return false;
     }
 
-    // City filter
     if (filters.city) {
       const orderCity = order?.village || order?.location?.village || order?.city || '';
       const match = orderCity.toLowerCase().includes(filters.city.toLowerCase());
       if (!match) return false;
     }
 
-    // Date filter
     if (filters.date) {
       const orderDate = order?.deliveryDate ? new Date(order.deliveryDate).toISOString().split('T')[0] : null;
       if (orderDate !== filters.date) return false;
     }
 
-    // Quantity filter
     const qty = Number(order?.requiredQuantity) || 0;
     if (filters.minKg && qty < Number(filters.minKg)) return false;
     if (filters.maxKg && qty > Number(filters.maxKg)) return false;
@@ -179,7 +160,6 @@ const FarmerBrokerOrders = () => {
     return true;
   });
 
-  // === HANDLERS ===
   const handleFilterChange = (field, value) => {
     setFilters(prev => ({
       ...prev,
@@ -214,12 +194,7 @@ const FarmerBrokerOrders = () => {
     setContactingBroker(order._id);
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(
-        `${API_BASE_URL}/api/farmer/broker-orders/${order._id}/contact-broker`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const response = await api.post(`/farmer/broker-orders/${order._id}/contact-broker`, {});
 
       if (response.data.success && response.data.conversationId) {
         navigate(`/farmer/messages?conversationId=${response.data.conversationId}`);
@@ -244,7 +219,6 @@ const FarmerBrokerOrders = () => {
 
   const hasFilters = Object.values(filters).some(v => v !== '');
 
-  // === RENDER ===
   if (loading) {
     return (
       <div style={{ padding: '40px', textAlign: 'center' }}>
@@ -290,7 +264,6 @@ const FarmerBrokerOrders = () => {
         <p style={{ margin: 0, color: '#666' }}>Browse broker orders from across Sri Lanka</p>
       </div>
 
-      {/* Filters */}
       <div style={{
         background: '#f8f9fa', borderRadius: '12px', padding: '20px', marginBottom: '25px'
       }}>
@@ -393,7 +366,6 @@ const FarmerBrokerOrders = () => {
         </div>
       </div>
 
-      {/* Results Count */}
       <div style={{ marginBottom: '20px', color: '#666', display: 'flex', justifyContent: 'space-between' }}>
         <div>
           Found <strong style={{ color: '#27ae60' }}>{filteredOrders.length}</strong> broker orders
@@ -403,7 +375,6 @@ const FarmerBrokerOrders = () => {
         </div>
       </div>
 
-      {/* Orders Grid */}
       {filteredOrders.length > 0 ? (
         <div style={{
           display: 'grid',
@@ -420,7 +391,6 @@ const FarmerBrokerOrders = () => {
                 overflow: 'hidden'
               }}
             >
-              {/* Header */}
               <div style={{
                 background: 'linear-gradient(135deg, #27ae60 0%, #2ecc71 100%)',
                 color: 'white',
@@ -441,7 +411,6 @@ const FarmerBrokerOrders = () => {
                 </span>
               </div>
 
-              {/* Body */}
               <div style={{ padding: '20px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid #f0f0f0' }}>
                   <span style={{ color: '#666' }}>Required</span>
@@ -487,7 +456,6 @@ const FarmerBrokerOrders = () => {
                 </div>
               </div>
 
-              {/* Footer */}
               <div style={{ padding: '15px 20px', background: '#f8f9fa' }}>
                 <button
                   onClick={() => handleContact(order)}
@@ -540,7 +508,6 @@ const FarmerBrokerOrders = () => {
         </div>
       )}
 
-      {/* Mobile Responsive */}
       <style>{`
         @media (max-width: 768px) {
           div[style*="grid-template-columns: repeat(2, 1fr)"] {

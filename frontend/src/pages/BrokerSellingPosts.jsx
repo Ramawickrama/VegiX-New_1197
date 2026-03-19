@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import VegetableSelect from '../components/VegetableSelect';
 import { useToast } from '../components/Toast';
 import { formatPrice } from '../utils/priceUtils';
 import '../styles/BrokerBuyer.css';
-import { API_BASE_URL } from '../services/api';
-
-const API_BASE = `${API_BASE_URL}/api/buyer`;
+import api from '../api';
 
 const BrokerSellingPosts = () => {
     const [posts, setPosts] = useState([]);
@@ -38,8 +35,6 @@ const BrokerSellingPosts = () => {
     const fetchPosts = useCallback(async (page = 1) => {
         try {
             setLoading(true);
-            const token = localStorage.getItem('token');
-            
             const params = new URLSearchParams();
             if (filters.vegetableId) params.append('vegetableId', filters.vegetableId);
             if (filters.priceMin) params.append('priceMin', filters.priceMin);
@@ -55,9 +50,7 @@ const BrokerSellingPosts = () => {
             params.append('page', page);
             params.append('limit', 20);
 
-            const res = await axios.get(`${API_BASE}/market-orders?${params.toString()}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.get(`/buyer/market-orders?${params.toString()}`);
             
             setPosts(res.data.posts || []);
             setPagination({
@@ -113,12 +106,9 @@ const BrokerSellingPosts = () => {
 
     const handleContact = async (postId) => {
         try {
-            const token = localStorage.getItem('token');
             console.log('[BrokerSellingPosts] Contacting broker for post:', postId);
             
-            const res = await axios.post(`${API_BASE}/market-orders/${postId}/contact`, {}, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.post(`/buyer/market-orders/${postId}/contact`, {});
 
             console.log('[BrokerSellingPosts] Contact response:', res.data);
 
@@ -138,10 +128,7 @@ const BrokerSellingPosts = () => {
 
     const handleAddToCart = async (postId) => {
         try {
-            const token = localStorage.getItem('token');
-            const res = await axios.post(`${API_BASE}/cart/${postId}`, {}, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            const res = await api.post(`/buyer/cart/${postId}`, {});
 
             if (res.data.success) {
                 toast.success('Added to cart!');

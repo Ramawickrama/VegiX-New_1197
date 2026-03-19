@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSocket } from '../contexts/SocketContext';
 import { useTranslation } from 'react-i18next';
 import VegetableSelect from '../components/VegetableSelect';
 import '../styles/BrokerBuyer.css';
-import { API_BASE_URL } from '../services/api';
-
-const API_URL = `${API_BASE_URL}/api/broker`;
+import api from '../api';
 
 const BrokerBuyerDemands = ({ user }) => {
   const [demands, setDemands] = useState([]);
@@ -41,8 +38,6 @@ const BrokerBuyerDemands = ({ user }) => {
   const fetchDemands = useCallback(async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
-
       const params = new URLSearchParams();
       if (filters.vegetableId) params.append('vegetableId', filters.vegetableId);
       if (filters.district) params.append('district', filters.district);
@@ -50,9 +45,7 @@ const BrokerBuyerDemands = ({ user }) => {
       if (filters.minQuantity) params.append('minQuantity', filters.minQuantity);
       if (filters.maxQuantity) params.append('maxQuantity', filters.maxQuantity);
 
-      const res = await axios.get(`${API_URL}/buyer-demands?${params.toString()}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await api.get(`/broker/buyer-demands?${params.toString()}`);
       setDemands(res.data || []);
     } catch (err) {
       console.error('Error fetching buyer demands:', err);
@@ -104,10 +97,7 @@ const BrokerBuyerDemands = ({ user }) => {
 
   const handleContact = async (demandId) => {
     try {
-      const token = localStorage.getItem('token');
-      const res = await axios.post(`${API_URL}/buyer-demands/${demandId}/contact`, {}, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await api.post(`/broker/buyer-demands/${demandId}/contact`, {});
 
       if (res.data.success) {
         navigate(`/broker/messages?email=${encodeURIComponent(res.data.otherUser.email)}`);
@@ -322,7 +312,6 @@ const BrokerBuyerDemands = ({ user }) => {
                   </span>
                 </div>
 
-                {/* Center Company Label */}
                 {demand.buyerId?.company && demand.buyerId.company !== 'N/A' && (
                   <div style={{ flex: '1', textAlign: 'center', alignSelf: 'center', minWidth: '120px' }}>
                     <span style={{ fontWeight: '600', color: '#444', fontSize: '1.05rem', background: '#f8f9fa', padding: '6px 16px', borderRadius: '8px', border: '1px solid #eee', display: 'inline-block' }}>

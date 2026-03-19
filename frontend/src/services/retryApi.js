@@ -1,33 +1,14 @@
-import axios from 'axios';
+import api from '../api';
 
-const API_BASE_URL = '/api';
-
-const API = axios.create({
-  baseURL: API_BASE_URL,
-  withCredentials: true,
-  timeout: 30000,
-});
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 let retryCount = 0;
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000;
 
-API.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+const retryApi = api;
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-API.interceptors.response.use(
+retryApi.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
@@ -49,7 +30,7 @@ API.interceptors.response.use(
 
       await sleep(RETRY_DELAY * originalRequest._retry);
 
-      return API(originalRequest);
+      return retryApi(originalRequest);
     }
 
     retryCount = 0;
@@ -57,10 +38,8 @@ API.interceptors.response.use(
   }
 );
 
-export { API_BASE_URL };
+export { default } from '../api';
 export const getRetryCount = () => retryCount;
 export const resetRetryCount = () => {
   retryCount = 0;
 };
-
-export default API;

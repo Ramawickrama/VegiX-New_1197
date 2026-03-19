@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 import '../styles/AdminPages.css';
-import { API_BASE_URL } from '../services/api';
+import api from '../api';
 
 const NoticeManagement = () => {
   const [notices, setNotices] = useState([]);
@@ -27,10 +26,7 @@ const NoticeManagement = () => {
 
   const fetchNotices = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_BASE_URL}/api/admin/notices`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await api.get('/admin/notices');
       setNotices(response.data.notices || []);
     } catch (error) {
       console.error('Error fetching notices:', error);
@@ -44,7 +40,7 @@ const NoticeManagement = () => {
     if (files.length === 0) return;
 
     const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    const maxSize = 5 * 1024 * 1024;
     const maxFiles = 5;
 
     const invalidFiles = files.filter(file => !validTypes.includes(file.type));
@@ -67,13 +63,11 @@ const NoticeManagement = () => {
 
     setUploading(true);
     try {
-      const token = localStorage.getItem('token');
       const formData = new FormData();
       files.forEach(file => formData.append('images', file));
 
-      const res = await axios.post(`${API_BASE_URL}/api/admin/upload-notice-images`, formData, {
+      const res = await api.post('/admin/upload-notice-images', formData, {
         headers: {
-          Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
         }
       });
@@ -122,7 +116,6 @@ const NoticeManagement = () => {
   const handlePostNotice = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token');
       const noticeData = {
         title: newNotice.title,
         content: newNotice.content,
@@ -140,13 +133,9 @@ const NoticeManagement = () => {
       }
 
       if (editingId) {
-        await axios.put(`${API_BASE_URL}/api/admin/notice/${editingId}`, noticeData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await api.put(`/admin/notice/${editingId}`, noticeData);
       } else {
-        await axios.post(`${API_BASE_URL}/api/admin/notice`, noticeData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await api.post('/admin/notice', noticeData);
       }
 
       setNewNotice({
@@ -191,10 +180,7 @@ const NoticeManagement = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this notice?')) return;
     try {
-      const token = localStorage.getItem('token');
-      await axios.delete(`${API_BASE_URL}/api/admin/notice/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.delete(`/admin/notice/${id}`);
       fetchNotices();
     } catch (error) {
       console.error('Error deleting notice:', error);
@@ -266,7 +252,6 @@ const NoticeManagement = () => {
               />
             </div>
 
-            {/* Image Upload */}
             <div className="form-group">
               <label>Image (Optional)</label>
               <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
@@ -310,7 +295,7 @@ const NoticeManagement = () => {
                     }}
                   >
                     <img
-                      src={`${API_BASE_URL}${preview.url}`}
+                      src={preview.url}
                       alt={`Preview ${index + 1}`}
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
@@ -342,7 +327,6 @@ const NoticeManagement = () => {
               {uploading && <p style={{ color: '#666', marginTop: '5px' }}>Uploading...</p>}
             </div>
 
-            {/* YouTube Link */}
             <div className="form-group">
               <label>YouTube Video Link (Optional)</label>
               <input
@@ -385,13 +369,12 @@ const NoticeManagement = () => {
                     <span className={`priority ${notice.priority}`}>{notice.priority.toUpperCase()}</span>
                   </div>
 
-                  {/* Notice Images Gallery */}
                   {notice.images && notice.images.length > 0 && (
                     <div style={{ marginBottom: '15px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
                       {notice.images.map((img, idx) => (
                         <img
                           key={idx}
-                          src={`${API_BASE_URL}${img.url}`}
+                          src={img.url}
                           alt={`${notice.title} - ${idx + 1}`}
                           style={{ maxWidth: '200px', maxHeight: '150px', borderRadius: '8px', objectFit: 'cover' }}
                         />
@@ -399,7 +382,6 @@ const NoticeManagement = () => {
                     </div>
                   )}
 
-                  {/* YouTube Video Thumbnail */}
                   {notice.youtubeVideoId && (
                     <div style={{ marginBottom: '15px' }}>
                       <a

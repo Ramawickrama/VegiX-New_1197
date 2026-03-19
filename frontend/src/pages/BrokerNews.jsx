@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import '../styles/Dashboard.css';
-import { API_BASE_URL } from '../services/api';
+import api from '../api';
 
 const BrokerNews = () => {
     const [notices, setNotices] = useState([]);
@@ -9,10 +8,7 @@ const BrokerNews = () => {
 
     const markNoticesSeen = async () => {
         try {
-            const token = localStorage.getItem('token');
-            await axios.post(`${API_BASE_URL}/api/admin/notices/mark-seen`, {}, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            await api.post('/admin/notices/mark-seen', {});
             window.dispatchEvent(new Event('notices-marked-seen'));
         } catch (error) {
             console.error('Error marking notices as seen:', error);
@@ -22,12 +18,8 @@ const BrokerNews = () => {
     useEffect(() => {
         const fetchNotices = async () => {
             try {
-                const token = localStorage.getItem('token');
-                const response = await axios.get(`${API_BASE_URL}/api/broker/notices`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                const response = await api.get('/broker/notices');
 
-                // Sort by latest first
                 const sortedNotices = (response.data || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setNotices(sortedNotices);
             } catch (error) {
@@ -109,13 +101,12 @@ const BrokerNews = () => {
                                 )}
                             </div>
 
-                            {/* Notice Images Gallery */}
                             {notice.images && notice.images.length > 0 && (
                                 <div style={{ marginBottom: '15px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px' }}>
                                     {notice.images.map((img, idx) => (
                                         <img
                                             key={idx}
-                                            src={`${API_BASE_URL}${img.url}`}
+                                            src={img.url}
                                             alt={`${notice.title} - ${idx + 1}`}
                                             style={{ width: '100%', maxHeight: '250px', borderRadius: '8px', objectFit: 'cover' }}
                                         />
@@ -123,7 +114,6 @@ const BrokerNews = () => {
                                 </div>
                             )}
 
-                            {/* YouTube Video Thumbnail */}
                             {notice.youtubeVideoId && (
                                 <div style={{ marginBottom: '15px' }}>
                                     <a
@@ -160,7 +150,6 @@ const BrokerNews = () => {
                                 {notice.content}
                             </p>
 
-                            {/* Voucher */}
                             {notice.voucher && notice.voucher.code && (
                                 <div style={{
                                     background: '#fffef0',

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import '../styles/Dashboard.css';
-import { API_BASE_URL } from '../services/api';
+import api from '../api';
 
 const FarmerNews = () => {
   const [notices, setNotices] = useState([]);
@@ -14,10 +13,7 @@ const FarmerNews = () => {
 
   const markNoticesSeen = async () => {
     try {
-      const token = localStorage.getItem('token');
-      await axios.post(`${API_BASE_URL}/api/admin/notices/mark-seen`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.post('/admin/notices/mark-seen', {});
       window.dispatchEvent(new Event('notices-marked-seen'));
     } catch (error) {
       console.error('Error marking notices as seen:', error);
@@ -26,11 +22,7 @@ const FarmerNews = () => {
 
   const fetchNotices = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_BASE_URL}/api/admin/notices`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      // Filter notices visible to farmers
+      const response = await api.get('/admin/notices');
       const farmerNotices = (response.data.notices || []).filter(
         notice => !notice.visibility || notice.visibility.includes('farmer')
       );
@@ -120,13 +112,12 @@ const FarmerNews = () => {
                 )}
               </div>
 
-              {/* Notice Images Gallery */}
               {notice.images && notice.images.length > 0 && (
                 <div style={{ marginBottom: '15px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px' }}>
                   {notice.images.map((img, idx) => (
                     <img 
                       key={idx}
-                      src={`${API_BASE_URL}${img.url}`} 
+                      src={img.url} 
                       alt={`${notice.title} - ${idx + 1}`}
                       style={{ width: '100%', maxHeight: '250px', borderRadius: '8px', objectFit: 'cover' }}
                     />
@@ -134,7 +125,6 @@ const FarmerNews = () => {
                 </div>
               )}
               
-              {/* YouTube Video Thumbnail */}
               {notice.youtubeVideoId && (
                 <div style={{ marginBottom: '15px' }}>
                   <a
@@ -171,7 +161,6 @@ const FarmerNews = () => {
                 {notice.content}
               </p>
               
-              {/* Voucher */}
               {notice.voucher && notice.voucher.code && (
                 <div style={{ 
                   background: '#fffef0', 

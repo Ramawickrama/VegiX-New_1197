@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/ViewOrders.css';
-import { API_BASE_URL } from '../services/api';
+import api from '../api';
 
 const BrokerViewBuyerOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -10,7 +9,6 @@ const BrokerViewBuyerOrders = () => {
   const [vegetables, setVegetables] = useState([]);
   const [contactingBuyer, setContactingBuyer] = useState(null);
   
-  // Filter states
   const [vegetableId, setVegetableId] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const [showFilters, setShowFilters] = useState(false);
@@ -27,10 +25,7 @@ const BrokerViewBuyerOrders = () => {
 
   const fetchVegetables = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${API_BASE_URL}/api/vegetables`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await api.get('/vegetables');
       setVegetables(response.data || []);
     } catch (error) {
       console.error('Error fetching vegetables:', error);
@@ -40,19 +35,14 @@ const BrokerViewBuyerOrders = () => {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
-      
-      // Build query params
       const params = new URLSearchParams();
       if (vegetableId) params.append('vegetableId', vegetableId);
       if (selectedDate) params.append('deliveryDate', selectedDate);
       
       const queryString = params.toString();
-      const url = `${API_BASE_URL}/api/broker/buyer-orders${queryString ? '?' + queryString : ''}`;
+      const url = queryString ? `/broker/buyer-orders?${queryString}` : '/broker/buyer-orders';
       
-      const response = await axios.get(url, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await api.get(url);
       setOrders(response.data.orders || []);
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -92,12 +82,7 @@ const BrokerViewBuyerOrders = () => {
     setContactingBuyer(order._id);
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.post(
-        `${API_BASE_URL}/api/broker/buyer-orders/${order._id}/contact`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const response = await api.post(`/broker/buyer-orders/${order._id}/contact`, {});
 
       if (response.data.success) {
         const buyerEmail = response.data.otherUser.email;
@@ -144,7 +129,6 @@ const BrokerViewBuyerOrders = () => {
         <p>Browse buyer purchase requests - Connect with buyers and fulfill their vegetable needs</p>
       </div>
 
-      {/* Filter Bar */}
       <div style={{
         background: 'white',
         padding: '20px',
@@ -176,9 +160,7 @@ const BrokerViewBuyerOrders = () => {
             </button>
           </div>
 
-          {/* Main Filters - Always Visible */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flex: 1 }}>
-            {/* Vegetable Type Dropdown */}
             <div style={{ flex: 1, maxWidth: '250px' }}>
               <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.85rem', color: '#666' }}>
                 Vegetable Type
@@ -205,7 +187,6 @@ const BrokerViewBuyerOrders = () => {
               </select>
             </div>
 
-            {/* Date Picker */}
             <div style={{ flex: 1, maxWidth: '200px' }}>
               <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.85rem', color: '#666' }}>
                 Required Date
@@ -224,7 +205,6 @@ const BrokerViewBuyerOrders = () => {
               />
             </div>
 
-            {/* Clear Filters Button */}
             {hasActiveFilters && (
               <button 
                 onClick={clearFilters}
@@ -244,7 +224,6 @@ const BrokerViewBuyerOrders = () => {
             )}
           </div>
 
-          {/* Results Count */}
           <div style={{ 
             padding: '8px 16px', 
             background: '#f8f9fa', 
@@ -256,7 +235,6 @@ const BrokerViewBuyerOrders = () => {
           </div>
         </div>
 
-        {/* Additional Filters - Collapsible */}
         {showFilters && (
           <div style={{ 
             marginTop: '20px', 
@@ -312,7 +290,6 @@ const BrokerViewBuyerOrders = () => {
         )}
       </div>
 
-      {/* Orders Grid */}
       {loading ? (
         <div style={{ textAlign: 'center', padding: '60px' }}>
           <div className="loading">Loading buyer orders...</div>
