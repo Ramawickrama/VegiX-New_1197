@@ -1,7 +1,15 @@
 import axios from "axios";
 
+const getBaseURL = () => {
+  const envUrl = import.meta.env.VITE_API_URL;
+  if (envUrl) {
+    return envUrl.replace(/\/$/, "");
+  }
+  return "";
+};
+
 const API = axios.create({
-  baseURL: '/api',
+  baseURL: getBaseURL(),
   withCredentials: true,
   timeout: 30000,
 });
@@ -17,7 +25,7 @@ API.interceptors.request.use((config) => {
 API.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error('[API Error]', error.config?.url, error.response?.status, error.message);
+    console.error("[API Error]", error.config?.url, error.response?.status, error.message);
     return Promise.reject(error);
   }
 );
