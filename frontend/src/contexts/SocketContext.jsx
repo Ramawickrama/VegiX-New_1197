@@ -50,10 +50,10 @@ export const SocketProvider = ({ children }) => {
     userRef.current = user;
 
     try {
-      const newSocket = io({
-        path: '/socket.io',
+      const newSocket = io(window.location.origin, {
         auth: { token },
         transports: ['websocket', 'polling'],
+        withCredentials: true,
         reconnection: true,
         reconnectionAttempts: 5,
         reconnectionDelay: 1000,
