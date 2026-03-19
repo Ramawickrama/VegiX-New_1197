@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
 import { io } from 'socket.io-client';
-import { API_BASE_URL } from '../services/api';
 
 const SocketContext = createContext(null);
 
@@ -50,9 +49,7 @@ export const SocketProvider = ({ children }) => {
     userRef.current = user;
 
     try {
-      const socketUrl = API_BASE_URL;
-
-      const newSocket = io(socketUrl, {
+      const newSocket = io({
         auth: { token },
         transports: ['websocket', 'polling'],
         reconnection: true,
@@ -72,7 +69,7 @@ export const SocketProvider = ({ children }) => {
         }
 
         // Fetch initial unread message count
-        fetch(`${API_BASE_URL}/api/chat/unread`, {
+        fetch(`/api/chat/unread`, {
           headers: { Authorization: `Bearer ${token}` }
         })
           .then(res => res.json())
@@ -223,7 +220,7 @@ export const SocketProvider = ({ children }) => {
     try {
       const token = localStorage.getItem('token');
       if (!token) return;
-      const res = await fetch(`${API_BASE_URL}/api/chat/unread`, {
+      const res = await fetch(`/api/chat/unread`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();

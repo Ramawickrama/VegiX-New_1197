@@ -1,11 +1,9 @@
 import axios from 'axios';
 
-const envApiUrl = import.meta.env.VITE_API_URL || "";
-const API_BASE_URL = envApiUrl || 'http://16.171.52.155:5000';
-const isDev = import.meta.env.DEV;
+const API_BASE_URL = '/api';
 
 const API = axios.create({
-  baseURL: isDev ? '/api' : `${API_BASE_URL}/api`,
+  baseURL: API_BASE_URL,
   withCredentials: true,
   timeout: 30000,
 });
@@ -59,6 +57,7 @@ API.interceptors.response.use(
   }
 );
 
+export { API_BASE_URL };
 export const getRetryCount = () => retryCount;
 export const resetRetryCount = () => {
   retryCount = 0;

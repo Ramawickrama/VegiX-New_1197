@@ -24,6 +24,8 @@ const ALLOWED_ORIGINS = [
   'http://127.0.0.1:5173',
   'http://16.171.52.155',
   'https://16.171.52.155',
+  'https://vegix.org',
+  'https://www.vegix.org',
 ];
 
 const corsOptions = {

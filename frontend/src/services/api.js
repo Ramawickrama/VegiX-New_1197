@@ -1,22 +1,9 @@
 import axios from "axios";
 
-const envApiUrl = import.meta.env.VITE_API_URL || "";
-
-export const API_BASE_URL = envApiUrl
-    ? (envApiUrl.startsWith('/') ? envApiUrl : envApiUrl)
-    : "http://16.171.52.155:5000";
-
-const isDev = import.meta.env.DEV;
-const baseUrl = isDev 
-    ? "/api" 
-    : `${API_BASE_URL}/api`;
-
-export const API_FULL_BASE_URL = baseUrl;
-
-console.log('[API Config]', { isDev, envApiUrl, API_BASE_URL, baseUrl });
+const API_BASE_URL = "/api";
 
 const API = axios.create({
-    baseURL: baseUrl,
+    baseURL: API_BASE_URL,
     withCredentials: true,
     timeout: 30000,
 });
@@ -41,4 +28,5 @@ API.interceptors.response.use(
     }
 );
 
+export { API_BASE_URL };
 export default API;
