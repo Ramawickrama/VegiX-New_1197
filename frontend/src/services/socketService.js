@@ -2,9 +2,10 @@ import { io } from 'socket.io-client';
 
 let socket = null;
 
-export const initSocket = (token) => {
+export const initializeSocket = (token) => {
   if (!socket || !socket.connected) {
     socket = io(window.location.origin, {
+      path: '/socket.io',
       auth: { token },
       transports: ['websocket', 'polling'],
       withCredentials: true,
