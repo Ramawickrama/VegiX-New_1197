@@ -22,8 +22,6 @@ const ALLOWED_ORIGINS = [
   'http://127.0.0.1:3000',
   'http://127.0.0.1:3001',
   'http://127.0.0.1:5173',
-  'http://16.171.52.155',
-  'https://16.171.52.155',
   'https://vegix.org',
   'https://www.vegix.org',
 ];

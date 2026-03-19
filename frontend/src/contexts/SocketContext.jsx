@@ -51,6 +51,7 @@ export const SocketProvider = ({ children }) => {
 
     try {
       const newSocket = io({
+        path: '/socket.io',
         auth: { token },
         transports: ['websocket', 'polling'],
         reconnection: true,

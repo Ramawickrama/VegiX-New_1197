@@ -8,6 +8,7 @@ export const initializeSocket = (token) => {
   }
 
   socket = io({
+    path: '/socket.io',
     auth: { token },
     transports: ['websocket', 'polling'],
     reconnection: true,

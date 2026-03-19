@@ -73,7 +73,7 @@ const AdminDashboard = ({ user }) => {
     const handleFocus = () => {
       fetchData();
     };
-    
+
     window.addEventListener('focus', handleFocus);
     return () => window.removeEventListener('focus', handleFocus);
   }, [fetchData]);
@@ -102,7 +102,7 @@ const AdminDashboard = ({ user }) => {
             </h1>
             <p style={{ margin: '8px 0 0 0', opacity: 0.9 }}>{t('dashboard.marketOverview')}</p>
           </div>
-          <button 
+          <button
             onClick={handleRefresh}
             disabled={refreshing}
             style={{
@@ -126,28 +126,28 @@ const AdminDashboard = ({ user }) => {
 
       {/* Stats Grid - Modern Cards */}
       <div className="stats-grid" style={{ marginBottom: '30px' }}>
-        <StatCard 
-          icon="🚜" 
-          label={t('roles.farmer')} 
-          value={stats.farmers} 
+        <StatCard
+          icon="🚜"
+          label={t('roles.farmer')}
+          value={stats.farmers}
           color="green"
         />
-        <StatCard 
-          icon="🤝" 
-          label={t('roles.broker')} 
-          value={stats.brokers} 
+        <StatCard
+          icon="🤝"
+          label={t('roles.broker')}
+          value={stats.brokers}
           color="purple"
         />
-        <StatCard 
-          icon="🏪" 
-          label={t('roles.buyer')} 
-          value={stats.buyers} 
+        <StatCard
+          icon="🏪"
+          label={t('roles.buyer')}
+          value={stats.buyers}
           color="blue"
         />
-        <StatCard 
-          icon="👥" 
-          label={t('dashboard.totalUsers')} 
-          value={stats.totalUsers} 
+        <StatCard
+          icon="👥"
+          label={t('dashboard.totalUsers')}
+          value={stats.totalUsers}
           color="orange"
         />
       </div>
@@ -188,11 +188,16 @@ const AdminDashboard = ({ user }) => {
           </div>
           <div className="card-body">
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <button onClick={() => window.location.hash = '#/admin/market-prices'} 
-              <button onClick={() => window.location.hash = '#/admin/notice-management'} 
-              <button onClick={() => window.location.hash = '#/admin/user-management'} 
-              <button onClick={() => window.location.hash = '#/admin/demand-analysis'}
-                className="btn" style={{ justifyContent: 'flex-start', background: '#f3e8ff', color: '#7c3aed' }}>
+              <button onClick={() => window.location.hash = '#/admin/market-prices'} className="btn" style={{ justifyContent: 'flex-start', background: '#ecfdf5', color: '#059669' }}>
+                💹 Market Prices
+              </button>
+              <button onClick={() => window.location.hash = '#/admin/notice-management'} className="btn" style={{ justifyContent: 'flex-start', background: '#fef3c7', color: '#d97706' }}>
+                📢 Notice Management
+              </button>
+              <button onClick={() => window.location.hash = '#/admin/user-management'} className="btn" style={{ justifyContent: 'flex-start', background: '#dbeafe', color: '#2563eb' }}>
+                👥 User Management
+              </button>
+              <button onClick={() => window.location.hash = '#/admin/demand-analysis'} className="btn" style={{ justifyContent: 'flex-start', background: '#f3e8ff', color: '#7c3aed' }}>
                 🔮 View Forecasts
               </button>
             </div>
