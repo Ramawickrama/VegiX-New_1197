@@ -26,13 +26,35 @@ if (missing.length > 0) {
     process.exit(1);
 }
 
+const normalizeOrigin = (url) => {
+    if (!url) return null;
+    return url.trim().replace(/\/$/, '');
+};
+
+const CLIENT_URLS = (process.env.CLIENT_URL || process.env.FRONTEND_URL || 'http://localhost:3000')
+    .split(',')
+    .map(normalizeOrigin)
+    .filter(Boolean);
+
+const ALLOWED_ORIGINS = [
+    ...CLIENT_URLS,
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://localhost:5173',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:3001',
+    'http://127.0.0.1:5173',
+];
+
 // ─── Export typed config object ──────────────────────────────────────────────
 module.exports = {
     PORT: parseInt(process.env.PORT, 10) || 5000,
     NODE_ENV: process.env.NODE_ENV || 'development',
     MONGO_URI: process.env.MONGO_URI,
     JWT_SECRET: process.env.JWT_SECRET,
-    FRONTEND_URL: process.env.FRONTEND_URL || 'http://localhost:3000',
+    FRONTEND_URL: normalizeOrigin(process.env.FRONTEND_URL) || 'http://localhost:3000',
+    CLIENT_URLS,
+    ALLOWED_ORIGINS,
 
     // Email (optional)
     EMAIL_SERVICE: process.env.EMAIL_SERVICE || 'gmail',

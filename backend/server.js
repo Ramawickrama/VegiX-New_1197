@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const http = require('http');
 const socketio = require('socket.io');
-const config = require('./config/env');           // validates env vars & loads dotenv for local dev
+const config = require('./config/env');
 const createAdmin = require('./utils/createAdmin');
 const seedVegetables = require('./seeds/seedVegetables');
 const socketManager = require('./services/socketManager');
@@ -12,28 +12,15 @@ const { startForecastScheduler, startMarketPriceScheduler, runInitialForecast, r
 const responseMiddleware = require('./middleware/responseMiddleware');
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 
-
-// Allowed frontend origins (cover Vite defaults + project-specific port)
-const ALLOWED_ORIGINS = [
-  config.FRONTEND_URL,
-  'http://localhost:3000',
-  'http://localhost:3001',
-  'http://localhost:5173',
-  'http://127.0.0.1:3000',
-  'http://127.0.0.1:3001',
-  'http://127.0.0.1:5173',
-  'https://vegix.org',
-  'https://www.vegix.org',
-];
+const ALLOWED_ORIGINS = config.ALLOWED_ORIGINS;
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // Allow requests with no origin (curl, Postman, same-origin Nginx proxy)
     if (!origin || ALLOWED_ORIGINS.includes(origin)) {
       callback(null, true);
     } else {
       console.warn(`[CORS] Blocked origin: ${origin}`);
-      callback(new Error(`CORS policy: origin ${origin} not allowed`));
+      callback(null, false);
     }
   },
   credentials: true,
@@ -52,6 +39,8 @@ const io = socketio(server, {
     credentials: true,
   }
 });
+
+console.log('[CORS] Allowed origins:', ALLOWED_ORIGINS);
 
 const path = require('path');
 
