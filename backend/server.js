@@ -12,11 +12,19 @@ const { startForecastScheduler, startMarketPriceScheduler, runInitialForecast, r
 const responseMiddleware = require('./middleware/responseMiddleware');
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 
+const normalizeOrigin = (origin) => {
+  if (!origin) return null;
+  return origin.trim().replace(/\/+$/, '');
+};
+
 const ALLOWED_ORIGINS = config.ALLOWED_ORIGINS;
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+    const normalizedOrigin = normalizeOrigin(origin);
+    const allowed = !normalizedOrigin || ALLOWED_ORIGINS.includes(normalizedOrigin);
+    
+    if (allowed) {
       callback(null, true);
     } else {
       console.warn(`[CORS] Blocked origin: ${origin}`);
@@ -34,7 +42,11 @@ app.set('trust proxy', 1);
 const server = http.createServer(app);
 const io = socketio(server, {
   cors: {
-    origin: ALLOWED_ORIGINS,
+    origin: (origin, callback) => {
+      const normalizedOrigin = normalizeOrigin(origin);
+      const allowed = !normalizedOrigin || ALLOWED_ORIGINS.includes(normalizedOrigin);
+      callback(null, allowed);
+    },
     methods: ['GET', 'POST'],
     credentials: true,
   }

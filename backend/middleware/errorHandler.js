@@ -1,4 +1,12 @@
 const errorHandler = (err, req, res, next) => {
+  if (err.message && err.message.includes('CORS policy')) {
+    console.warn('[CORS Error]', err.message);
+    return res.status(403).json({
+      success: false,
+      message: 'Not allowed by CORS',
+    });
+  }
+
   console.error('Error Stack:', err.stack);
   console.error('Error Message:', err.message);
 
