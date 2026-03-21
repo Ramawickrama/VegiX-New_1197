@@ -1,5 +1,6 @@
 const FarmerPost = require('../models/FarmerPost');
 const Vegetable = require('../models/Vegetable');
+const mongoose = require('mongoose');
 const socketManager = require('../services/socketManager');
 
 // Create a new post
@@ -85,23 +86,145 @@ exports.getMyPosts = async (req, res) => {
 // Get all farmer posts (could be useful for brokers)
 exports.getAllPosts = async (req, res) => {
     try {
-        const posts = await FarmerPost.find()
-            .populate('farmerId', 'name')
-            .populate('vegetable', 'name nameSi nameTa')
-            .sort({ createdAt: -1 });
+        // Parse query params
+        const {
+            vegetableId,
+            district,
+            nearCity,
+            areaVillage,
+            minKg,
+            maxKg,
+            minPrice,
+            maxPrice,
+            fromDate,
+            toDate,
+            status,
+            page = 1,
+            limit = 50
+        } = req.query;
+
+        // Build filter object - only allow known keys
+        const filter = {};
+
+        // Vegetable filter (exact match on ObjectId)
+        if (vegetableId) {
+            if (mongoose && mongoose.Types.ObjectId.isValid(vegetableId)) {
+                filter.vegetable = vegetableId;
+            }
+        }
+
+        // Location filters (case-insensitive exact match, trimmed)
+        if (district) {
+            filter['location.district'] = { $regex: `^${escapeRegex(district.trim())}$`, $options: 'i' };
+        }
+        if (nearCity) {
+            filter['location.nearCity'] = { $regex: `^${escapeRegex(nearCity.trim())}$`, $options: 'i' };
+        }
+        if (areaVillage) {
+            filter['location.village'] = { $regex: `^${escapeRegex(areaVillage.trim())}$`, $options: 'i' };
+        }
+
+        // Quantity range filter
+        if (minKg || maxKg) {
+            filter.quantity = {};
+            if (minKg) {
+                const min = Number(minKg);
+                if (!isNaN(min) && min >= 0) filter.quantity.$gte = min;
+            }
+            if (maxKg) {
+                const max = Number(maxKg);
+                if (!isNaN(max) && max >= 0) filter.quantity.$lte = max;
+            }
+            // Remove empty object if neither was valid
+            if (Object.keys(filter.quantity).length === 0) delete filter.quantity;
+        }
+
+        // Price range filter
+        if (minPrice || maxPrice) {
+            filter.pricePerKg = {};
+            if (minPrice) {
+                const min = Number(minPrice);
+                if (!isNaN(min) && min >= 0) filter.pricePerKg.$gte = min;
+            }
+            if (maxPrice) {
+                const max = Number(maxPrice);
+                if (!isNaN(max) && max >= 0) filter.pricePerKg.$lte = max;
+            }
+            // Remove empty object if neither was valid
+            if (Object.keys(filter.pricePerKg).length === 0) delete filter.pricePerKg;
+        }
+
+        // Date range filter (createdAt)
+        if (fromDate || toDate) {
+            filter.createdAt = {};
+            if (fromDate) {
+                const from = new Date(fromDate);
+                if (!isNaN(from.getTime())) filter.createdAt.$gte = from;
+            }
+            if (toDate) {
+                const to = new Date(toDate);
+                if (!isNaN(to.getTime())) {
+                    // Set to end of day
+                    to.setHours(23, 59, 59, 999);
+                    filter.createdAt.$lte = to;
+                }
+            }
+            // Remove empty object if neither was valid
+            if (Object.keys(filter.createdAt).length === 0) delete filter.createdAt;
+        }
+
+        // Status filter
+        if (status) {
+            const validStatuses = ['active', 'bought', 'sold', 'cancelled'];
+            if (validStatuses.includes(status)) {
+                filter.status = status;
+            }
+        }
+
+        // Pagination
+        const pageNum = Math.max(1, parseInt(page) || 1);
+        const limitNum = Math.min(100, Math.max(1, parseInt(limit) || 50));
+        const skip = (pageNum - 1) * limitNum;
+
+        // Execute query with pagination
+        const [posts, total] = await Promise.all([
+            FarmerPost.find(filter)
+                .populate('farmerId', 'name')
+                .populate('vegetable', 'name nameSi nameTa')
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limitNum)
+                .lean(),
+            FarmerPost.countDocuments(filter)
+        ]);
 
         const postsWithLocalizedNames = posts.map(post => ({
-            ...post.toObject(),
+            ...post,
             vegetableName: post.vegetable?.name || post.vegetableName,
             vegetableNameSi: post.vegetable?.nameSi || '',
             vegetableNameTa: post.vegetable?.nameTa || ''
         }));
 
-        res.status(200).json({ success: true, posts: postsWithLocalizedNames });
+        res.status(200).json({
+            success: true,
+            posts: postsWithLocalizedNames,
+            pagination: {
+                page: pageNum,
+                limit: limitNum,
+                total,
+                pages: Math.ceil(total / limitNum)
+            }
+        });
     } catch (error) {
+        console.error('Error fetching farmer posts:', error);
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
+// Helper function to escape regex special characters (prevents NoSQL injection via regex)
+function escapeRegex(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
 // Update a post
 exports.updatePost = async (req, res) => {

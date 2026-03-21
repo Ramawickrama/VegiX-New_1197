@@ -83,5 +83,12 @@ const farmerPostSchema = new mongoose.Schema({
 
 farmerPostSchema.index({ farmerId: 1, createdAt: -1 });
 farmerPostSchema.index({ status: 1 });
+farmerPostSchema.index({ vegetable: 1 });
+farmerPostSchema.index({ 'location.district': 1 });
+farmerPostSchema.index({ 'location.nearCity': 1 });
+farmerPostSchema.index({ 'location.village': 1 });
+farmerPostSchema.index({ createdAt: -1 });
+farmerPostSchema.index({ pricePerKg: 1 });
+farmerPostSchema.index({ quantity: 1 });
 
 module.exports = mongoose.model('FarmerPost', farmerPostSchema, 'farmer_posts');
