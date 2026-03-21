@@ -122,3 +122,43 @@ select {
     width: 100%;
   }
 }
+
+/* ── Tablet (768px - 1023px) ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .dashboard-main {
+    flex-direction: column;
+  }
+
+  .dashboard-content {
+    width: 100%;
+  }
+}
+
+/* ── Ensure no horizontal overflow on any screen size ── */
+@media (max-width: 1023px) {
+  html, body {
+    overflow-x: hidden;
+  }
+
+  * {
+    max-width: 100%;
+  }
+}
+
+/* ── Responsive images ── */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Responsive tables - horizontal scroll on mobile ── */
+@media (max-width: 1023px) {
+  .responsive-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .responsive-table-wrapper table {
+    min-width: 600px;
+  }
+}

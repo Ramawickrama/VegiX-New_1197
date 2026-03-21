@@ -62,7 +62,7 @@ const ChatLayout = ({ title = 'Messages', subtitle = 'Chat with farmers, brokers
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobileView(window.innerWidth <= 768);
+            setIsMobileView(window.innerWidth < 1024);
         };
         handleResize();
         window.addEventListener('resize', handleResize);
@@ -603,7 +603,7 @@ const ChatLayout = ({ title = 'Messages', subtitle = 'Chat with farmers, brokers
             />
 
             {/* Page header bar — fixed height, never scrolls */}
-            <div style={{
+            <div className="chat-panel-header" style={{
                 padding: '10px 20px',
                 flexShrink: 0,
                 background: '#fff',
@@ -639,7 +639,7 @@ const ChatLayout = ({ title = 'Messages', subtitle = 'Chat with farmers, brokers
             {/* Chat panels — fill all remaining height */}
             <div style={{
                 display: 'grid',
-                gridTemplateColumns: isMobileView ? '1fr' : '350px 1fr',
+                gridTemplateColumns: isMobileView ? '1fr' : '320px 1fr',
                 flex: 1,
                 minHeight: 0,
                 background: 'white',
@@ -689,6 +689,58 @@ const ChatLayout = ({ title = 'Messages', subtitle = 'Chat with farmers, brokers
                 @keyframes bounce {
                     0%, 100% { transform: translateY(0); }
                     50% { transform: translateY(-4px); }
+                }
+
+                /* Responsive chat styles */
+                @media (max-width: 1023px) {
+                    .chat-panel-header {
+                        padding: 8px 12px !important;
+                        min-height: 50px !important;
+                    }
+                    .chat-panel-header h1 {
+                        font-size: 1.2rem !important;
+                    }
+                    .chat-panel-header p {
+                        font-size: 0.75rem !important;
+                    }
+                    .chat-message-input {
+                        padding: 8px 10px !important;
+                    }
+                    .chat-message-input textarea {
+                        min-width: 100px !important;
+                        padding: 10px 14px !important;
+                        font-size: 16px !important;
+                    }
+                    .chat-message-input button {
+                        padding: 10px 18px !important;
+                    }
+                }
+
+                @media (max-width: 767px) {
+                    .chat-panel-header {
+                        padding: 6px 10px !important;
+                        min-height: 48px !important;
+                    }
+                    .chat-panel-header h1 {
+                        font-size: 1.1rem !important;
+                    }
+                    .chat-panel-header p {
+                        display: none !important;
+                    }
+                    .chat-message-input {
+                        padding: 8px !important;
+                        gap: 8px !important;
+                    }
+                    .chat-message-input textarea {
+                        min-width: unset !important;
+                        flex: 1 !important;
+                        padding: 10px 14px !important;
+                        font-size: 16px !important;
+                    }
+                    .chat-message-input button {
+                        padding: 10px 14px !important;
+                        font-size: 14px !important;
+                    }
                 }
             `}</style>
         </div>

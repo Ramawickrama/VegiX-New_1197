@@ -261,21 +261,120 @@
   color: #666;
 }
 
-@media (max-width: 768px) {
+/* ── Tablet (768px - 1023px) ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .live-market-container {
+    padding: 16px;
+  }
+
+  .market-header {
+    margin-bottom: 16px;
+  }
+
+  .header-title h1 {
+    font-size: 22px;
+  }
+
+  .market-filters {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .filter-group select {
+    min-width: 160px;
+  }
+
+  .market-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .price-card {
+    border-radius: 10px;
+  }
+
+  .price-value {
+    font-size: 20px;
+  }
+}
+
+/* ── Mobile (< 768px) ── */
+@media (max-width: 767px) {
+  .live-market-container {
+    padding: 12px;
+  }
+
   .market-header {
     flex-direction: column;
     align-items: flex-start;
+    margin-bottom: 12px;
   }
-  
+
+  .header-title h1 {
+    font-size: 20px;
+  }
+
+  .header-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .last-updated {
+    order: 2;
+    width: 100%;
+    text-align: center;
+    margin-top: 8px;
+  }
+
+  .btn-refresh {
+    flex: 1;
+    justify-content: center;
+  }
+
   .market-filters {
     flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
   }
-  
+
   .filter-group select {
     width: 100%;
+    min-width: unset;
+    padding: 12px;
+    font-size: 16px;
   }
-  
+
   .market-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .price-card-header {
+    padding: 12px;
+  }
+
+  .price-card-header h3 {
+    font-size: 16px;
+  }
+
+  .price-card-body {
+    padding: 12px;
+  }
+
+  .price-value {
+    font-size: 18px;
+  }
+
+  .price-row {
+    margin-bottom: 8px;
+  }
+
+  .price-range {
+    padding: 10px;
+  }
+
+  .price-card-footer {
+    padding: 10px 12px;
+    font-size: 11px;
   }
 }

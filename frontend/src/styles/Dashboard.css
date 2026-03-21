@@ -249,6 +249,35 @@
   }
 }
 
+/* ── Tablet (768px - 1023px) ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .content-section {
+    padding: 20px;
+  }
+
+  .dashboard-container {
+    padding: 20px;
+  }
+
+  .prices-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .order-item {
+    flex-wrap: wrap;
+  }
+
+  .order-price {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+
 /* ✅ MARKET PRICES GRID */
 .prices-grid {
   display: grid;
@@ -486,19 +515,31 @@
   font-weight: bold;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .dashboard-container {
-    padding: 15px;
+    padding: 12px;
   }
 
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .content-section {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .content-section h2 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
   }
 
   .order-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
+    padding: 12px;
   }
 
   .order-price {
@@ -507,11 +548,51 @@
   }
 
   .prices-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
 
   .notice-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .order-info h4 {
+    font-size: 0.95rem;
+  }
+
+  .order-info p {
+    font-size: 0.85rem;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  table th, table td {
+    padding: 8px 6px;
+  }
+
+  .news-feed {
+    max-height: 200px;
+  }
+}
+
+/* ── Small Mobile (< 480px) ── */
+@media (max-width: 479px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .prices-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .price-card h4 {
+    font-size: 0.85rem;
+  }
+
+  .price {
+    font-size: 1.2rem;
   }
 }

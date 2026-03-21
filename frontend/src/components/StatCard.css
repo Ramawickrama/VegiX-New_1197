@@ -103,3 +103,31 @@
 .stat-mini .stat-label {
   font-size: var(--font-size-xs);
 }
+
+/* ── Responsive StatCard ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .stat-card-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .stat-card-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .stat-mini {
+    padding: var(--space-3);
+  }
+
+  .stat-mini .stat-card-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+}

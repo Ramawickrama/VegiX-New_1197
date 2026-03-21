@@ -115,31 +115,55 @@
   color: #888;
 }
 
-@media (max-width: 1024px) {
+/* ── Tablet (768px - 1023px) ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .view-orders-page {
+    padding: 20px;
+  }
+
   .orders-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 
   .broker-orders-container {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .broker-orders-container .order-card {
+    min-height: 280px;
   }
 
   .broker-buying-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .filter-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
   }
 }
 
-@media (max-width: 768px) {
+/* ── Mobile (< 768px) ── */
+@media (max-width: 767px) {
   .view-orders-page {
-    padding: 15px;
+    padding: 12px;
+  }
+
+  .page-header h1 {
+    font-size: 1.5rem;
   }
 
   .orders-container {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .broker-orders-container {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
   
   .broker-orders-container .order-card {
@@ -148,6 +172,35 @@
 
   .broker-buying-grid {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .filter-bar {
+    gap: 8px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 8px;
+  }
+
+  .filter-btn {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+}
+
+/* ── Small Mobile (< 480px) ── */
+@media (max-width: 479px) {
+  .view-orders-page {
+    padding: 10px;
+  }
+
+  .page-header {
+    margin-bottom: 16px;
+  }
+
+  .page-header h1 {
+    font-size: 1.3rem;
   }
 }
 

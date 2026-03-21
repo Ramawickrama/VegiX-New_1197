@@ -475,9 +475,33 @@
   background: #9b59b6;
 }
 
-@media (max-width: 768px) {
+/* ── Tablet (768px - 1023px) ── */
+@media (min-width: 768px) and (max-width: 1023px) {
   .admin-page {
-    padding: 15px;
+    padding: 20px;
+  }
+
+  .form-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .data-table {
+    font-size: 0.9rem;
+  }
+
+  .page-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .filter-bar {
+    flex-wrap: wrap;
+  }
+}
+
+/* ── Mobile (< 768px) ── */
+@media (max-width: 767px) {
+  .admin-page {
+    padding: 12px;
   }
 
   .form-row {
@@ -486,16 +510,61 @@
 
   .data-table {
     font-size: 0.85rem;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .data-table th,
   .data-table td {
-    padding: 8px;
+    padding: 8px 6px;
+    white-space: nowrap;
   }
 
   .feedback-header {
     flex-direction: column;
     gap: 10px;
+  }
+
+  .page-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .form-card, .data-card {
+    padding: 15px;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .btn-primary, .btn-delete {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+  }
+
+  .filter-select {
+    width: 100%;
+  }
+
+  .recommendations {
+    grid-template-columns: 1fr;
+  }
+
+  .notice-header, .feedback-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .notice-header .priority, .feedback-header > span {
+    align-self: flex-start;
   }
 }
 

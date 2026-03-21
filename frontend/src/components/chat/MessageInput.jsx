@@ -77,6 +77,7 @@ const MessageInput = ({
     return (
         <form 
             onSubmit={onSend} 
+            className="chat-message-input"
             style={{ 
                 padding: '12px 16px', 
                 borderTop: '1px solid #eee',
