@@ -348,6 +348,140 @@
   opacity: 0.9;
 }
 
+/* ── Farmer Posts Filter Bar ── */
+.farmer-filter-bar {
+  background: white;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.filter-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 150px;
+}
+
+.filter-item-small {
+  flex: 0 0 100px;
+  min-width: 100px;
+}
+
+.filter-item label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.filter-item select,
+.filter-item input {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  background: white;
+}
+
+.filter-item input:focus,
+.filter-item select:focus {
+  outline: none;
+  border-color: #27ae60;
+  box-shadow: 0 0 0 2px rgba(39, 174, 96, 0.15);
+}
+
+.filter-item input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.filter-item input[type="number"]::-webkit-outer-spin-button,
+.filter-item input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-apply-filter {
+  padding: 10px 20px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-apply-filter:hover {
+  background: #219a52;
+}
+
+.btn-clear-filter {
+  padding: 10px 20px;
+  background: #ecf0f1;
+  color: #555;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-clear-filter:hover {
+  background: #dfe6e9;
+}
+
+.pagination-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 16px;
+  background: white;
+  border-radius: 8px;
+}
+
+.pagination-bar button {
+  padding: 8px 16px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.pagination-bar button:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.pagination-bar button:hover:not(:disabled) {
+  background: #2980b9;
+}
+
+.pagination-bar span {
+  color: #666;
+  font-size: 0.9rem;
+}
+
 /* ── Tablet Responsive (768px - 1023px) ── */
 @media (min-width: 768px) and (max-width: 1023px) {
   .filter-grid {
@@ -357,10 +491,57 @@
   .filter-actions {
     justify-content: flex-start;
   }
+
+  .filter-row {
+    gap: 10px;
+  }
+
+  .filter-item {
+    min-width: 130px;
+  }
+
+  .filter-item-small {
+    flex: 0 0 90px;
+    min-width: 90px;
+  }
 }
 
 /* ── Mobile Responsive (< 768px) ── */
 @media (max-width: 767px) {
+  .farmer-filter-bar {
+    padding: 12px;
+  }
+
+  .filter-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .filter-item,
+  .filter-item-small {
+    width: 100%;
+    min-width: unset;
+    flex: unset;
+  }
+
+  .filter-item select,
+  .filter-item input {
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .filter-actions {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .btn-apply-filter,
+  .btn-clear-filter {
+    flex: 1;
+    padding: 12px;
+    font-size: 1rem;
+  }
+
   .filter-section {
     padding: 15px !important;
   }
@@ -390,5 +571,16 @@
     width: 100%;
     padding: 12px;
     font-size: 1rem;
+  }
+
+  .pagination-bar {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .pagination-bar span {
+    width: 100%;
+    text-align: center;
+    order: -1;
   }
 }
