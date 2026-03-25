@@ -140,6 +140,21 @@
     "profile": "Profile",
     "account": "Account"
   },
+  "profile": {
+    "subtitle": "View and manage your account information",
+    "personalInfo": "Personal Information",
+    "changePassword": "Change Password",
+    "editProfile": "Edit Profile",
+    "userId": "User ID",
+    "memberSince": "Member Since",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "updatePassword": "Update Password",
+    "passwordHint": "Leave passwords empty if you don't want to change them",
+    "passwordChanged": "Password changed successfully",
+    "profileUpdated": "Profile updated successfully"
+  },
   "sidebar": {
     "dashboard": "Dashboard",
     "nationalAnalytics": "National Analytics",

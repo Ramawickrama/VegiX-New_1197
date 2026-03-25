@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import './Navbar.css';
 
-const Navbar = ({ user, onLogout, onMenuToggle }) => {
+const Navbar = ({ user, onLogout, onMenuToggle, onProfileClick }) => {
   const { t } = useTranslation();
   const socketContext = useSocket() || { 
     isConnected: false, 
@@ -16,6 +16,7 @@ const Navbar = ({ user, onLogout, onMenuToggle }) => {
   const { isConnected, unreadCount, notifications, clearNotifications, removeNotification } = socketContext;
   const [showNotifications, setShowNotifications] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const handleNotificationClick = () => {
     setShowNotifications(!showNotifications);
@@ -202,9 +203,111 @@ const Navbar = ({ user, onLogout, onMenuToggle }) => {
                   )}
                 </div>
                 
-                <span className="user-info">{t('common.welcome')}, {user.name}</span>
-                <span className={`user-role ${user.role}`}>{user.role.toUpperCase()}</span>
-                <button onClick={onLogout} className="logout-btn">{t('common.logout')}</button>
+                <div style={{ position: 'relative' }}>
+                  <button
+                    onClick={() => setShowUserMenu(!showUserMenu)}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      padding: '8px 12px',
+                      borderRadius: '8px',
+                      transition: 'background 0.2s'
+                    }}
+                    onMouseEnter={(e) => e.target.style.background = '#f5f5f5'}
+                    onMouseLeave={(e) => e.target.style.background = 'none'}
+                  >
+                    <div style={{
+                      width: '36px',
+                      height: '36px',
+                      borderRadius: '50%',
+                      background: 'linear-gradient(135deg, #2ecc71 0%, #27ae60 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'white',
+                      fontWeight: 'bold',
+                      fontSize: '14px'
+                    }}>
+                      {user.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div style={{ textAlign: 'left' }}>
+                      <div style={{ fontSize: '14px', fontWeight: '600', color: '#333' }}>{user.name}</div>
+                      <div style={{ fontSize: '11px', color: '#888' }}>{user.role.toUpperCase()}</div>
+                    </div>
+                    <span style={{ fontSize: '12px', color: '#888' }}>{showUserMenu ? '▲' : '▼'}</span>
+                  </button>
+
+                  {showUserMenu && (
+                    <div style={{
+                      position: 'absolute',
+                      top: '100%',
+                      right: 0,
+                      marginTop: '8px',
+                      background: 'white',
+                      borderRadius: '8px',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                      minWidth: '200px',
+                      zIndex: 1000,
+                      overflow: 'hidden'
+                    }}>
+                      <button
+                        onClick={() => {
+                          setShowUserMenu(false);
+                          if (onProfileClick) onProfileClick();
+                        }}
+                        style={{
+                          width: '100%',
+                          padding: '12px 16px',
+                          background: 'none',
+                          border: 'none',
+                          textAlign: 'left',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '10px',
+                          fontSize: '14px',
+                          color: '#333',
+                          transition: 'background 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.target.style.background = '#f5f5f5'}
+                        onMouseLeave={(e) => e.target.style.background = 'none'}
+                      >
+                        <span style={{ fontSize: '18px' }}>👤</span>
+                        {t('nav.profile')}
+                      </button>
+                      <div style={{ borderTop: '1px solid #eee' }}></div>
+                      <button
+                        onClick={() => {
+                          setShowUserMenu(false);
+                          onLogout();
+                        }}
+                        style={{
+                          width: '100%',
+                          padding: '12px 16px',
+                          background: 'none',
+                          border: 'none',
+                          textAlign: 'left',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '10px',
+                          fontSize: '14px',
+                          color: '#e74c3c',
+                          transition: 'background 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.target.style.background = '#fef5f5'}
+                        onMouseLeave={(e) => e.target.style.background = 'none'}
+                      >
+                        <span style={{ fontSize: '18px' }}>🚪</span>
+                        {t('common.logout')}
+                      </button>
+                    </div>
+                  )}
+                </div>
               </>
             ) : (
               <span>{t('common.notLoggedIn')}</span>

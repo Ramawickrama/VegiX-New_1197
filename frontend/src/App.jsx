@@ -63,6 +63,7 @@ import Conversations from './pages/Conversations';
 
 // Common Pages
 import TransactionHistory from './pages/TransactionHistory';
+import Profile from './pages/Profile';
 
 import './App.css';
 
@@ -123,7 +124,6 @@ const ProtectedRoute = ({ user, onLogout }) => {
   if (!user) return <Navigate to="/login" />;
 
   const location = useLocation();
-  // Derive active menu from path
   const pathParts = location.pathname.split('/');
   const activeMenu = pathParts[2] || 'dashboard';
 
@@ -132,11 +132,15 @@ const ProtectedRoute = ({ user, onLogout }) => {
     setSidebarOpen(false);
   };
 
+  const handleProfileClick = () => {
+    navigate(`/${user.role}/profile`);
+  };
+
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   return (
     <div className="dashboard-layout">
-      <Navbar user={user} onLogout={onLogout} onMenuToggle={toggleSidebar} />
+      <Navbar user={user} onLogout={onLogout} onMenuToggle={toggleSidebar} onProfileClick={handleProfileClick} />
       <div className="dashboard-main">
         <Sidebar
           userRole={user.role}
@@ -150,6 +154,7 @@ const ProtectedRoute = ({ user, onLogout }) => {
               <>
                 <Route path="/" element={<AdminDashboard user={user} />} />
                 <Route path="/dashboard" element={<AdminDashboard user={user} />} />
+                <Route path="/profile" element={<Profile user={user} />} />
                 <Route path="/national-analytics" element={<AdminNationalDashboard />} />
                 <Route path="/live-market" element={<LiveMarket user={user} />} />
                 <Route path="/user-management" element={<UserManagement />} />
@@ -174,6 +179,7 @@ const ProtectedRoute = ({ user, onLogout }) => {
               <>
                 <Route path="/" element={<MarketPrices />} />
                 <Route path="/dashboard" element={<MarketPrices />} />
+                <Route path="/profile" element={<Profile user={user} />} />
                 <Route path="/market-prices" element={<MarketPrices />} />
                 <Route path="/vegetable-history/:id" element={<VegetablePriceHistory />} />
               </>
@@ -183,6 +189,7 @@ const ProtectedRoute = ({ user, onLogout }) => {
               <>
                 <Route path="/" element={<FarmerDashboard user={user} />} />
                 <Route path="/dashboard" element={<FarmerDashboard user={user} />} />
+                <Route path="/profile" element={<Profile user={user} />} />
                 <Route path="/publish-order" element={<FarmerCreatePost />} />
                 <Route path="/my-orders" element={<FarmerOrders />} />
                 <Route path="/broker-orders" element={<FarmerBrokerOrders />} />
@@ -200,6 +207,7 @@ const ProtectedRoute = ({ user, onLogout }) => {
               <>
                 <Route path="/" element={<BrokerDashboard user={user} />} />
                 <Route path="/dashboard" element={<BrokerDashboard user={user} />} />
+                <Route path="/profile" element={<Profile user={user} />} />
                 <Route path="/cart" element={<BrokerCart />} />
                 <Route path="/payment/:sellOrderId" element={<BrokerPayment />} />
                 <Route path="/market-prices" element={<BrokerMarketPrices />} />
@@ -222,6 +230,7 @@ const ProtectedRoute = ({ user, onLogout }) => {
               <>
                 <Route path="/" element={<BuyerDashboard user={user} />} />
                 <Route path="/dashboard" element={<BuyerDashboard user={user} />} />
+                <Route path="/profile" element={<Profile user={user} />} />
                 <Route path="/buyer-demand" element={<BuyerDemand />} />
                 <Route path="/buyer-broker-orders" element={<BrokerSellingPosts />} />
                 <Route path="/buyer-market" element={<BrokerSellingPosts />} />

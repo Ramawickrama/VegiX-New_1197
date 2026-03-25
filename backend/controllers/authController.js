@@ -141,3 +141,112 @@ exports.getUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// ─── Get User Profile ─────────────────────────────────────────────────────────
+exports.getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({
+      profile: {
+        id: user._id,
+        userId: user.userId,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        phone: user.phone,
+        location: user.location,
+        company: user.company,
+        registrationDate: user.registrationDate,
+        profileImage: user.profileImage,
+        totalIncome: user.totalIncome,
+        walletBalance: user.walletBalance,
+        completedOrders: user.completedOrders,
+        isActive: user.isActive,
+      },
+    });
+  } catch (error) {
+    console.error('[AUTH] getProfile error:', error.message);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// ─── Update User Profile ─────────────────────────────────────────────────────
+exports.updateProfile = async (req, res) => {
+  try {
+    const { name, phone, location, company } = req.body;
+
+    if (!name || !phone) {
+      return res.status(400).json({ message: 'Name and phone are required' });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.user.userId,
+      { name, phone, location, company },
+      { new: true, runValidators: true }
+    ).select('-password');
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({
+      message: 'Profile updated successfully',
+      profile: {
+        id: user._id,
+        userId: user.userId,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        phone: user.phone,
+        location: user.location,
+        company: user.company,
+      },
+    });
+  } catch (error) {
+    console.error('[AUTH] updateProfile error:', error.message);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// ─── Change Password ──────────────────────────────────────────────────────────
+exports.changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      return res.status(400).json({ message: 'All password fields are required' });
+    }
+
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({ message: 'New passwords do not match' });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ message: 'New password must be at least 6 characters' });
+    }
+
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const isPasswordValid = await user.comparePassword(currentPassword);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Current password is incorrect' });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).json({
+      message: 'Password changed successfully',
+    });
+  } catch (error) {
+    console.error('[AUTH] changePassword error:', error.message);
+    res.status(500).json({ message: error.message });
+  }
+};

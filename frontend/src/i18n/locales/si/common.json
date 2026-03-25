@@ -140,6 +140,21 @@
     "profile": "පැතිකඩ",
     "account": "ගිණුම"
   },
+  "profile": {
+    "subtitle": "ඔබේ ගිණුම් තොරතුරු බලන්න කළමනාකරණය කරන්න",
+    "personalInfo": "පුද්ගලික තොරතුරු",
+    "changePassword": "මුරපදය වෙනස් කරන්න",
+    "editProfile": "පැතිකඩ සංස්කරණය කරන්න",
+    "userId": "පරිශීලක ID",
+    "memberSince": "සාමාජික වී ඇති දිනය",
+    "currentPassword": "වත්මන් මුරපදය",
+    "newPassword": "නව මුරපදය",
+    "confirmNewPassword": "නව මුරපදය තහවුරු කරන්න",
+    "updatePassword": "මුරපදය යාවත්කාලීන කරන්න",
+    "passwordHint": "ඔබට වෙනස් කිරීමට අවශ්‍ය නැතිනම් මුරපද පමණක් නැතුව තබන්න",
+    "passwordChanged": "මුරපදය සාර්ථකව වෙනස් කරන ලදි",
+    "profileUpdated": "පැතිකඩ සාර්ථකව යාවත්කාලීන කරන ලදි"
+  },
   "sidebar": {
     "dashboard": "මුල් පිටුව",
     "nationalAnalytics": "ජාතික විශ්ලේෂණය",
